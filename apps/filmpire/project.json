@@ -16,7 +16,10 @@
         "tsConfig": "apps/filmpire/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["apps/filmpire/src/favicon.ico", "apps/filmpire/src/assets"],
-        "styles": ["apps/filmpire/src/styles.scss"],
+        "styles": [
+          "@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/filmpire/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {

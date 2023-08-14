@@ -19,7 +19,9 @@
             ]
           }
         ]
-      }
+      },
+      "plugins": ["@ngrx"],
+      "extends": ["plugin:@ngrx/recommended"]
     },
     {
       "files": ["*.ts", "*.tsx"],

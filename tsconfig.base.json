@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ng-filmpire/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@ng-filmpire/core-data": ["libs/core-data/src/index.ts"],
+      "@ng-filmpire/material": ["libs/material/src/index.ts"],
+      "@ng-filmpire/ui": ["libs/ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
