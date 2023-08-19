@@ -1,0 +1,87 @@
+<p class="fixed min-h-[64px] w-[calc(100vw-240px)] max-sm:w-screen">
+  <mat-toolbar
+    class="bg-[#1976d2] text-white dark:bg-[#272727] w-auto place-content-center"
+  >
+    <mat-toolbar-row class="justify-between items-center">
+      <button
+        mat-icon-button
+        class="icon menu-icon sm:hidden"
+        aria-label="menu icon"
+        (click)="toggleMobileSidenav.emit()"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        class="icon brightness-icon"
+        aria-label="brightness icon"
+        (click)="toggleDarkMode.emit()"
+      >
+        <mat-icon *ngIf="darkMode; else light">brightness_7</mat-icon>
+        <ng-template #light>
+          <mat-icon>brightness_4</mat-icon>
+        </ng-template>
+      </button>
+
+      <form
+        [formGroup]="searchForm"
+        class="form max-sm:hidden"
+        (ngSubmit)="searchMovie()"
+      >
+        <mat-form-field>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            class="text-white caret-white placeholder:text-white"
+            type="text"
+            formControlName="search"
+            matInput
+            placeholder="Search for movie..."
+          />
+          <button
+            *ngIf="searchForm.get('search')?.value"
+            class="icon cursor-pointer"
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="resetSearchBar()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+
+      <button mat-button class="icon" aria-label="account icon">
+        <p>LOGIN</p>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row class="justify-center items-center mt-5 sm:hidden">
+      <form [formGroup]="searchForm" class="form" (ngSubmit)="searchMovie()">
+        <mat-form-field>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            class="text-white caret-white placeholder:text-white"
+            type="text"
+            formControlName="search"
+            matInput
+            placeholder="Search for movie..."
+          />
+          <button
+            *ngIf="searchForm.get('search')?.value"
+            class="icon cursor-pointer"
+            type="button"
+            matSuffix
+            mat-icon-button
+            aria-label="Clear"
+            (click)="resetSearchBar()"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </form>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</p>

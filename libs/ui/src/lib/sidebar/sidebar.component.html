@@ -1,0 +1,39 @@
+<a routerLink="" class="flex py-5 justify-center">
+  <img
+    class="w-3/4"
+    [src]="darkMode ? 'assets/darkLogo.png' : 'assets/lightLogo.png'"
+    alt="logo"
+  />
+</a>
+<mat-divider></mat-divider>
+<mat-nav-list>
+  <div mat-subheader>Categories</div>
+  <ng-container *ngFor="let category of categories">
+    <a mat-list-item routerLink=".">
+      <span matListItemIcon
+        ><img
+          class="dark:invert"
+          src="assets\genres and categories\{{ category.title }}.png"
+          [alt]="category.title"
+          height="30"
+      /></span>
+      <div matListItemTitle>{{ category.title | titlecase }}</div>
+    </a>
+  </ng-container>
+
+  <mat-divider></mat-divider>
+
+  <div mat-subheader>Genres</div>
+  <ng-container *ngFor="let genre of genres">
+    <a mat-list-item routerLink=".">
+      <span matListItemIcon
+        ><img
+          class="dark:invert"
+          src="assets\genres and categories\{{ genre.title }}.png"
+          [alt]="genre.title"
+          height="30"
+      /></span>
+      <div matListItemTitle>{{ genre.title | titlecase }}</div>
+    </a>
+  </ng-container>
+</mat-nav-list>

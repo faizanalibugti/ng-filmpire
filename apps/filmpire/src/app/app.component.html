@@ -1,1 +1,35 @@
-<ng-filmpire-nx-welcome></ng-filmpire-nx-welcome>
+<div class="mat-app-background" [ngClass]="{ dark: darkMode }">
+  <mat-sidenav-container
+    class="flex flex-col absolute top-0 bottom-0 left-0 right-0 h-screen"
+  >
+    <mat-sidenav
+      mode="side"
+      opened
+      class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:hidden"
+    >
+      <ng-filmpire-sidebar [darkMode]="darkMode"></ng-filmpire-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav
+      mode="over"
+      position="end"
+      
+      #snav
+      class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:block"
+    >
+      <ng-filmpire-sidebar [darkMode]="darkMode"></ng-filmpire-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">
+      <ng-filmpire-navbar
+        [darkMode]="darkMode"
+        (toggleDarkMode)="toggleDarkMode()"
+        (toggleMobileSidenav)="toggleMobileSidenav()"
+      ></ng-filmpire-navbar>
+
+      <main class="mt-20 p-2 max-sm:mt-36">
+        <router-outlet></router-outlet>
+      </main>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
