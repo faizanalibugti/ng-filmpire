@@ -31,6 +31,13 @@
       "files": ["*.html"],
       "extends": ["plugin:@nrwl/nx/angular-template"],
       "rules": {}
+    },
+    {
+      "files": ["*.spec.ts"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
     }
   ]
 }
