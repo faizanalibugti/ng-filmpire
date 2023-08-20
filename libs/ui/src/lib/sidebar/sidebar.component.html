@@ -9,31 +9,46 @@
 <mat-nav-list>
   <div mat-subheader>Categories</div>
   <ng-container *ngFor="let category of categories">
-    <a mat-list-item routerLink=".">
+    <a
+      mat-list-item
+      [routerLink]="[category.value]"
+      [routerLinkActive]="'active'"
+    >
       <span matListItemIcon
         ><img
           class="dark:invert"
-          src="assets\genres and categories\{{ category.title }}.png"
-          [alt]="category.title"
+          src="assets\genres and categories\{{ category.name }}.png"
+          [alt]="category.name"
           height="30"
       /></span>
-      <div matListItemTitle>{{ category.title | titlecase }}</div>
+      <div matListItemTitle>{{ category.name | titlecase }}</div>
     </a>
   </ng-container>
 
   <mat-divider></mat-divider>
 
   <div mat-subheader>Genres</div>
-  <ng-container *ngFor="let genre of genres">
-    <a mat-list-item routerLink=".">
-      <span matListItemIcon
-        ><img
-          class="dark:invert"
-          src="assets\genres and categories\{{ genre.title }}.png"
-          [alt]="genre.title"
-          height="30"
-      /></span>
-      <div matListItemTitle>{{ genre.title | titlecase }}</div>
-    </a>
+  <ng-container *ngIf="genres; else loading">
+    <ng-container *ngFor="let genre of genres">
+      <a mat-list-item [routerLink]="[genre.id]" [routerLinkActive]="'active'">
+        <span matListItemIcon
+          ><img
+            class="dark:invert"
+            src="assets\genres and categories\{{ genre.name | lowercase }}.png"
+            [alt]="genre.name"
+            height="30"
+        /></span>
+        <div matListItemTitle>{{ genre.name | titlecase }}</div>
+      </a>
+    </ng-container>
   </ng-container>
 </mat-nav-list>
+
+<ng-template #loading>
+  <div class="w-full flex justify-center items-center">
+    <mat-progress-spinner
+      diameter="20"
+      mode="indeterminate"
+    ></mat-progress-spinner>
+  </div>
+</ng-template>

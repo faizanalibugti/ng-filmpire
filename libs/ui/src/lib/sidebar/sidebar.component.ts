@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Genre } from '@ng-filmpire/api-interfaces';
 
 @Component({
   selector: 'ng-filmpire-sidebar',
@@ -7,76 +8,23 @@ import { Component, Input } from '@angular/core';
 })
 export class SidebarComponent {
   @Input() darkMode!: boolean;
+  @Input() genres!: Genre[];
 
   categories = [
     {
-      title: 'popular',
+      id: 1,
+      name: 'popular',
+      value: 'popular',
     },
     {
-      title: 'top rated',
+      id: 2,
+      name: 'top rated',
+      value: 'top_rated',
     },
     {
-      title: 'upcoming',
-    },
-  ];
-
-  genres = [
-    {
-      title: 'action',
-    },
-    {
-      title: 'adventure',
-    },
-    {
-      title: 'animation',
-    },
-    {
-      title: 'comedy',
-    },
-    {
-      title: 'crime',
-    },
-    {
-      title: 'documentary',
-    },
-    {
-      title: 'drama',
-    },
-    {
-      title: 'family',
-    },
-    {
-      title: 'fantasy',
-    },
-    {
-      title: 'history',
-    },
-    {
-      title: 'horror',
-    },
-    {
-      title: 'music',
-    },
-    {
-      title: 'mystery',
-    },
-    {
-      title: 'romance',
-    },
-    {
-      title: 'science fiction',
-    },
-    {
-      title: 'tv movie',
-    },
-    {
-      title: 'thriller',
-    },
-    {
-      title: 'war',
-    },
-    {
-      title: 'western',
+      id: 3,
+      name: 'upcoming',
+      value: 'upcoming',
     },
   ];
 }

@@ -7,7 +7,12 @@
       opened
       class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:hidden"
     >
-      <ng-filmpire-sidebar [darkMode]="darkMode"></ng-filmpire-sidebar>
+      <ng-container *ngIf="moiveGenres$ | async as genres">
+        <ng-filmpire-sidebar
+          [darkMode]="darkMode"
+          [genres]="genres.genres"
+        ></ng-filmpire-sidebar>
+      </ng-container>
     </mat-sidenav>
 
     <mat-sidenav
@@ -16,7 +21,12 @@
       #snav
       class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:block"
     >
-      <ng-filmpire-sidebar [darkMode]="darkMode"></ng-filmpire-sidebar>
+      <ng-container *ngIf="moiveGenres$ | async as genres">
+        <ng-filmpire-sidebar
+          [darkMode]="darkMode"
+          [genres]="genres.genres"
+        ></ng-filmpire-sidebar>
+      </ng-container>
     </mat-sidenav>
 
     <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">

@@ -16,7 +16,7 @@ export const appRoutes: Route[] = [
     component: ActorsComponent,
   },
   {
-    path: '',
+    path: ':id',
     component: MoviesComponent,
   },
   {
