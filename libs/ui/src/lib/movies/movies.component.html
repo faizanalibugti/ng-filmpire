@@ -1,5 +1,7 @@
+<ng-container *ngIf="categoryOrGenreChanged$ | async"></ng-container>
+
 <ng-container *ngIf="moviesList$ | async as movies; else loading">
-  <div class="p-6 grid grid-cols-card gap-6" #topOfPage>
+  <div class="p-6 grid grid-cols-card gap-6 scroll-mt-32" #topOfPage>
     <ng-container *ngFor="let movie of movies.results; let first = first">
       <mat-card
         *ngIf="first; else rest"
@@ -10,7 +12,7 @@
             ')'
         }"
         class="cursor-pointer col-[1/-1] justify-end h-[490px] mb-6 bg-[rgba(0,0,0,0.575)] bg-blend-darken bg-cover bg-no-repeat bg-center"
-        [routerLink]="['movie', movie.id]"
+        [routerLink]="['/movie', movie.id]"
       >
         <mat-card-content class="w-2/5 max-sm:w-3/4">
           <h5 class="text-white font-medium text-xl">
@@ -23,7 +25,7 @@
       <ng-template #rest>
         <mat-card
           class="p-3 flex flex-col justify-center items-center cursor-pointer dark:bg-[#121212]"
-          [routerLink]="['movie', movie.id]"
+          [routerLink]="['/movie', movie.id]"
         >
           <img
             class="w-52 h-80 object-cover rounded-xl hover:scale-[1.05]"
