@@ -1,1 +1,68 @@
-<p>movies works!</p>
+<ng-container *ngIf="moviesList$ | async as movies; else loading">
+  <div class="p-6 grid grid-cols-card gap-6" #topOfPage>
+    <ng-container *ngFor="let movie of movies.results; let first = first">
+      <mat-card
+        *ngIf="first; else rest"
+        [ngStyle]="{
+          backgroundImage:
+            'url(https://image.tmdb.org/t/p/original' +
+            movie.backdrop_path +
+            ')'
+        }"
+        class="cursor-pointer col-[1/-1] justify-end h-[490px] mb-6 bg-[rgba(0,0,0,0.575)] bg-blend-darken bg-cover bg-no-repeat bg-center"
+        [routerLink]="['movie', movie.id]"
+      >
+        <mat-card-content class="w-2/5 max-sm:w-3/4">
+          <h5 class="text-white font-medium text-xl">
+            {{ movie.title }}
+          </h5>
+          <p class="text-white">{{ movie.overview }}</p>
+        </mat-card-content>
+      </mat-card>
+
+      <ng-template #rest>
+        <mat-card
+          class="p-3 flex flex-col justify-center items-center cursor-pointer dark:bg-[#121212]"
+          [routerLink]="['movie', movie.id]"
+        >
+          <img
+            class="w-52 h-80 object-cover rounded-xl hover:scale-[1.05]"
+            mat-card-image
+            src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+            alt="{{ movie.title }} poster"
+          />
+          <mat-card-content
+            class="flex flex-col flex-nowrap justify-center items-center"
+          >
+            <h5
+              class="font-medium text-xl text-ellipsis w-56 whitespace-nowrap overflow-hidden mt-3 mb-0 text-center"
+              [matTooltip]="movie.title"
+            >
+              {{ movie.title }}
+            </h5>
+            <span
+              [attr.data-star]="
+                (movie.vote_average / 10) * 5 | number : '1.1-1'
+              "
+              matTooltip="{{ movie.vote_average }}"
+            ></span>
+          </mat-card-content>
+        </mat-card>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <mat-paginator
+    [length]="movies.total_results"
+    [pageSize]="movies.results.length"
+    [pageIndex]="movies.page - 1"
+    (page)="goToPage($event)"
+  >
+  </mat-paginator>
+</ng-container>
+
+<ng-template #loading>
+  <div class="w-full flex justify-center items-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>
