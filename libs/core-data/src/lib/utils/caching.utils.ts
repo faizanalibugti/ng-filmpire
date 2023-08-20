@@ -13,13 +13,13 @@ import { Observable, tap } from 'rxjs';
 export function sendRequest(
   req: HttpRequest<unknown>,
   next: HttpHandler,
-  cache: Map<HttpRequest<unknown>, HttpResponse<unknown>>
+  cache: Map<string, HttpResponse<unknown>>
 ): Observable<HttpEvent<unknown>> {
   return next.handle(req).pipe(
     tap((event) => {
       // There may be other events besides the response.
       if (event instanceof HttpResponse) {
-        cache.set(req, event); // Update the cache.
+        cache.set(req.urlWithParams, event); // Update the cache.
       }
     })
   );

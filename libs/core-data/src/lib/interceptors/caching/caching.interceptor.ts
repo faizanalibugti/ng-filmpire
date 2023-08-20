@@ -11,7 +11,7 @@ import { isCacheable, sendRequest } from '../../utils/caching.utils';
 
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
-  private cache: Map<HttpRequest<unknown>, HttpResponse<unknown>> = new Map();
+  private cache: Map<string, HttpResponse<unknown>> = new Map();
 
   intercept(
     request: HttpRequest<unknown>,
@@ -22,7 +22,7 @@ export class CachingInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const cachedResponse = this.cache.get(request);
+    const cachedResponse = this.cache.get(request.urlWithParams);
 
     return cachedResponse
       ? of(cachedResponse)

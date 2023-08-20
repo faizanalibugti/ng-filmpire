@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
+import { BaseEntity, Movie } from '@ng-filmpire/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,9 @@ export class MovieHttpService {
    */
   constructor(private http: HttpClient) {}
 
-  loadPopularMovies(page: number = 1): Observable<unknown> {
-    return this.http.get(`${this.baseUrl}/popular`, { params: { page } });
+  loadPopularMovies(page: number = 1) {
+    return this.http.get<BaseEntity<Movie>>(`${this.baseUrl}/popular`, {
+      params: { page },
+    });
   }
 }
