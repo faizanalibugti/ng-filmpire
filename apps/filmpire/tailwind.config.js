@@ -12,7 +12,11 @@ module.exports = {
     'libs/**/*.{html,ts,css,scss}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        card: 'repeat(auto-fill, minmax(220px, 1fr))',
+      },
+    },
   },
   plugins: [],
 };
