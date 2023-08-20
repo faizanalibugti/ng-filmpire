@@ -5,3 +5,4 @@ export * from './lib/interceptors/caching/caching.interceptor';
 
 export * from './lib/services/auth/auth.service';
 export * from './lib/services/movie-http/movie-http.service';
+export * from './lib/services/genre-http/genre-http.service';

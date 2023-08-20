@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
 import { BaseEntity, Movie } from '@ng-filmpire/api-interfaces';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -24,9 +24,35 @@ export class MovieHttpService {
    */
   constructor(private http: HttpClient) {}
 
-  loadPopularMovies(page: number = 1) {
+  getMovies(genreIdOrCategoryName: string | number = 'popular', page: number = 1) {
+    // Get Movies by Category
+    if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
+      return this.http.get<BaseEntity<Movie>>(
+        `${this.baseUrl}/${genreIdOrCategoryName}`,
+        {
+          params: { page },
+        }
+      );
+    }
+
+    // Get Movies by Genre
+    if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'number') {
+      return this.http.get<BaseEntity<Movie>>(
+        `${this.API_ENDPOINT}/discover/movie`,
+        {
+          params: { with_genres: genreIdOrCategoryName, page },
+        }
+      );
+    }
+
     return this.http.get<BaseEntity<Movie>>(`${this.baseUrl}/popular`, {
       params: { page },
+    });
+  }
+
+  getMovieDetails(id: number) {
+    return this.http.get<BaseEntity<Movie>>(`${this.baseUrl}/${id}`, {
+      params: { append_to_response: 'videos,credits' },
     });
   }
 }
