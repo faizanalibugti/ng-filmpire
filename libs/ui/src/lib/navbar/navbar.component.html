@@ -36,7 +36,8 @@
             type="text"
             formControlName="search"
             matInput
-            placeholder="Search for movie..."
+            placeholder="Search for movie or tv show..."
+            [matAutocomplete]="auto"
           />
           <button
             *ngIf="searchForm.get('search')?.value"
@@ -49,6 +50,42 @@
           >
             <mat-icon>close</mat-icon>
           </button>
+
+          <mat-autocomplete
+            [hideSingleSelectionIndicator]="true"
+            #auto="matAutocomplete"
+            class="dark:bg-[#121212]"
+          >
+            <ng-container *ngIf="searchForm.get('search')?.value">
+              <mat-option
+                *ngFor="
+                  let result of $any((searchValueChanges$ | async)?.results)
+                "
+              >
+                <div class="flex">
+                  <div class="mr-2 w-10 h-10">
+                    <img
+                      alt="{{
+                        result?.name ? result.name : result.title
+                      }} poster"
+                      class="object-cover rounded"
+                      [src]="
+                        result.poster_path
+                          ? 'https://image.tmdb.org/t/p/w500/' +
+                            result.poster_path
+                          : 'https://image.tmdb.org/t/p/w500/' +
+                            result.profile_path
+                      "
+                    />
+                  </div>
+                  <span
+                    class="w-52 text-ellipsis overflow-hidden dark:text-white"
+                    >{{ result?.name ? result.name : result.title }}</span
+                  >
+                </div>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
         </mat-form-field>
       </form>
 
