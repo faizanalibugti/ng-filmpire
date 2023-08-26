@@ -3,6 +3,12 @@ export interface Genre {
   name: string;
 }
 
-export interface MovieGenre {
+export interface Category {
+  id: number;
+  name: string;
+  value: string;
+}
+
+export interface GenreEntity {
   genres: Genre[];
 }
