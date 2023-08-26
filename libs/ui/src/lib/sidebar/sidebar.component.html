@@ -5,19 +5,40 @@
     alt="logo"
   />
 </a>
+
 <mat-divider></mat-divider>
-<mat-nav-list>
-  <div mat-subheader>Categories</div>
+
+<mat-button-toggle-group
+  class="flex justify-center"
+  name="media"
+  aria-label="Media Selection"
+  [value]="currentMedia"
+  (change)="getMediaSelection($event)"
+>
+  <mat-button-toggle class="w-full" value="movie">Movies</mat-button-toggle>
+  <mat-button-toggle class="w-full" value="tv">TV Shows</mat-button-toggle>
+</mat-button-toggle-group>
+
+<mat-divider></mat-divider>
+
+<mat-nav-list
+  class="h-[calc(100vh-230px)] overflow-x-hidden overflow-y-auto"
+  cdkScrollable
+>
+  <div mat-subheader>
+    {{ currentMedia === 'movie' ? 'Movie' : 'TV' }} Categories
+  </div>
   <ng-container *ngFor="let category of categories">
     <a
+      @flyInOut
       mat-list-item
-      [routerLink]="[category.value]"
+      [routerLink]="['/category', currentMedia, category.value]"
       [routerLinkActive]="'active'"
     >
       <span matListItemIcon
         ><img
           class="dark:invert"
-          src="assets\genres and categories\{{ category.name }}.png"
+          src="assets/genres and categories/{{ category.name }}.png"
           [alt]="category.name"
           height="30"
       /></span>
@@ -27,14 +48,21 @@
 
   <mat-divider></mat-divider>
 
-  <div mat-subheader>Genres</div>
+  <div mat-subheader>
+    {{ currentMedia === 'movie' ? 'Movie' : 'TV' }} Genres
+  </div>
   <ng-container *ngIf="genres; else loading">
     <ng-container *ngFor="let genre of genres">
-      <a mat-list-item [routerLink]="[genre.id]" [routerLinkActive]="'active'">
+      <a
+        @flyInOut
+        mat-list-item
+        [routerLink]="['genre', currentMedia, genre.id]"
+        [routerLinkActive]="'active'"
+      >
         <span matListItemIcon
           ><img
             class="dark:invert"
-            src="assets\genres and categories\{{ genre.name | lowercase }}.png"
+            src="assets/genres and categories/{{ genre.name | lowercase }}.png"
             [alt]="genre.name"
             height="30"
         /></span>
@@ -43,6 +71,17 @@
     </ng-container>
   </ng-container>
 </mat-nav-list>
+
+<mat-divider></mat-divider>
+
+<a
+  href="https://www.themoviedb.org/"
+  target="_blank"
+  class="flex my-5 justify-center"
+  matTooltip="This product uses the TMDB API but is not endorsed or certified by TMDB."
+>
+  <img class="w-2/5" src="assets/tmdb_logo.svg" alt="tmdb attribution" />
+</a>
 
 <ng-template #loading>
   <div class="w-full flex justify-center items-center">
