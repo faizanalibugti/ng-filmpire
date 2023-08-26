@@ -2,6 +2,10 @@
   "name": "ng-filmpire",
   "version": "0.0.0",
   "license": "MIT",
+  "author": {"name": "Faizan Ali Bugti", "email": "faizanalibugti@outlook.com"},
+  "repository": {
+    "url": "https://github.com/faizanalibugti/ng-filmpire"
+  },
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js",
