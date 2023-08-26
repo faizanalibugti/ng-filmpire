@@ -133,7 +133,7 @@ This product uses the TMDB API but is not endorsed or certified by TMDB.
 - [JavaScript Mastery's React Implementation](https://www.jsmastery.pro/ultimate-react-course)
 - [Nx Workspace](https://nx.dev)
 - [Angular](https://angular.io)
-- [Angular Material](https://angular.material.com/)
+- [Angular Material](https://material.angular.io/)
 - [NgRx](https://ngrx.io)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
