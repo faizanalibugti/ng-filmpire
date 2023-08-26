@@ -117,8 +117,8 @@ Don't forget to give the project a star! Thanks again!
 ## Attribution
 
 <br/>
-<div align="left" style="width: 200px">
-  <img src="apps\filmpire\src\assets\tmdb_logo.svg" align="center">
+<div align="left">
+  <img src="apps\filmpire\src\assets\tmdb_logo.svg" align="center" width=200>
 </div>
 <br/>
 

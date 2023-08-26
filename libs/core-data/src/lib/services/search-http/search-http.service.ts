@@ -1,16 +1,16 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { GenreEntity } from '@ng-filmpire/api-interfaces';
+import { HttpClient } from '@angular/common/http';
+import { BaseEntity, SearchResults } from '@ng-filmpire/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenreHttpService {
+export class SearchHttpService {
   /**
    * Model name for the base endpoint
    */
-  private model = 'genre';
+  private model = 'search';
 
   private API_ENDPOINT = environment.apiEnpoint;
 
@@ -24,11 +24,9 @@ export class GenreHttpService {
    */
   constructor(private http: HttpClient) {}
 
-  getMovieGenres() {
-    return this.http.get<GenreEntity>(`${this.baseUrl}/movie/list`);
-  }
-
-  getTVGenres() {
-    return this.http.get<GenreEntity>(`${this.baseUrl}/tv/list`);
+  getMultiSearchResults(query: string) {
+    return this.http.get<BaseEntity<SearchResults>>(`${this.baseUrl}/multi`, {
+      params: { query, include_adult: false },
+    });
   }
 }

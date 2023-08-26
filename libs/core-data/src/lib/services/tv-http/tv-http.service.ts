@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseEntity, Movie, MovieDetail } from '@ng-filmpire/api-interfaces';
 import { environment } from '../environments/environment';
+import { BaseEntity, TvShow, TvShowDetail } from '@ng-filmpire/api-interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MovieHttpService {
+export class TvHttpService {
   /**
    * Model name for the base endpoint
    */
-  private model = 'movie';
+  private model = 'tv';
 
   private API_ENDPOINT = environment.apiEnpoint;
 
@@ -24,21 +24,21 @@ export class MovieHttpService {
    */
   constructor(private http: HttpClient) {}
 
-  getMovies(
+  getTVShows(
     genreIdOrCategoryName: string | number = 'popular',
     page: number = 1
   ) {
-    // Get Movies by Category
+    // Get TV Shows by Category
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
       if (genreIdOrCategoryName === 'trending') {
-        return this.http.get<BaseEntity<Movie>>(
+        return this.http.get<BaseEntity<TvShow>>(
           `${this.API_ENDPOINT}/${genreIdOrCategoryName}/${this.model}/day`,
           {
             params: { page },
           }
         );
       } else {
-        return this.http.get<BaseEntity<Movie>>(
+        return this.http.get<BaseEntity<TvShow>>(
           `${this.baseUrl}/${genreIdOrCategoryName}`,
           {
             params: { page },
@@ -47,23 +47,23 @@ export class MovieHttpService {
       }
     }
 
-    // Get Movies by Genre
+    // Get TVShows by Genre
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'number') {
-      return this.http.get<BaseEntity<Movie>>(
-        `${this.API_ENDPOINT}/discover/movie`,
+      return this.http.get<BaseEntity<TvShow>>(
+        `${this.API_ENDPOINT}/discover/tv`,
         {
           params: { with_genres: genreIdOrCategoryName, page },
         }
       );
     }
 
-    return this.http.get<BaseEntity<Movie>>(`${this.baseUrl}/popular`, {
+    return this.http.get<BaseEntity<TvShow>>(`${this.baseUrl}/popular`, {
       params: { page },
     });
   }
 
-  getMovieDetails(id: number) {
-    return this.http.get<BaseEntity<MovieDetail>>(`${this.baseUrl}/${id}`, {
+  getTVShowDetails(id: number) {
+    return this.http.get<BaseEntity<TvShowDetail>>(`${this.baseUrl}/${id}`, {
       params: { append_to_response: 'recommendations,videos,credits' },
     });
   }
