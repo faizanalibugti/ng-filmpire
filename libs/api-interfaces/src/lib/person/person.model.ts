@@ -1,13 +1,10 @@
-import { Movie } from '../api-interfaces';
-import { TvShow } from '../tv/tv.model';
-
 export interface Person {
   id: number;
   name: string;
   profile_path: string;
   adult: boolean;
   popularity: number;
-  known_for: Array<Movie | TvShow>;
+  media_type: 'person';
 }
 
 export interface PersonDetails extends Person {
@@ -19,4 +16,5 @@ export interface PersonDetails extends Person {
   homepage: string;
   imdb_id: string;
   place_of_birth: string;
+  age?: number;
 }
