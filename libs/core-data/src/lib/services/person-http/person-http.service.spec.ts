@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MovieHttpService } from './movie-http.service';
+import { PersonHttpService } from './person-http.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
-describe('MovieHttpService', () => {
-  let service: MovieHttpService;
+describe('PersonHttpService', () => {
+  let service: PersonHttpService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
     });
-    service = TestBed.inject(MovieHttpService);
+    service = TestBed.inject(PersonHttpService);
   });
 
   it('should be created', () => {
