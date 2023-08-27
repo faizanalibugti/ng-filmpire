@@ -5,7 +5,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  token = environment.apiKey;
+  private token = environment.apiKey;
 
   getAuthorizationToken() {
     return this.token;

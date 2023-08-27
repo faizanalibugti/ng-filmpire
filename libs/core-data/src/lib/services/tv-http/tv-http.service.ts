@@ -63,7 +63,7 @@ export class TvHttpService {
   }
 
   getTVShowDetails(id: number) {
-    return this.http.get<BaseEntity<TvShowDetail>>(`${this.baseUrl}/${id}`, {
+    return this.http.get<TvShowDetail>(`${this.baseUrl}/${id}`, {
       params: { append_to_response: 'recommendations,videos,credits' },
     });
   }

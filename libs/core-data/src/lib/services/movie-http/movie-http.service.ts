@@ -63,7 +63,7 @@ export class MovieHttpService {
   }
 
   getMovieDetails(id: number) {
-    return this.http.get<BaseEntity<MovieDetail>>(`${this.baseUrl}/${id}`, {
+    return this.http.get<MovieDetail>(`${this.baseUrl}/${id}`, {
       params: { append_to_response: 'recommendations,videos,credits' },
     });
   }

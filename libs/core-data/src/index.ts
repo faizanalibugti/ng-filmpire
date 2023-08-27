@@ -5,6 +5,7 @@ export * from './lib/interceptors/caching/caching.interceptor';
 
 export * from './lib/services/auth/auth.service';
 export * from './lib/services/movie-http/movie-http.service';
+export * from './lib/services/person-http/person-http.service';
 export * from './lib/services/genre-http/genre-http.service';
 export * from './lib/services/search-http/search-http.service';
 export * from './lib/services/tv-http/tv-http.service';
