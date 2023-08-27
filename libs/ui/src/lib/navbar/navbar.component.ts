@@ -6,6 +6,7 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BaseEntity, SearchResults } from '@ng-filmpire/api-interfaces';
 import { SearchHttpService } from '@ng-filmpire/core-data';
@@ -33,7 +34,11 @@ export class NavbarComponent implements OnInit {
   searchForm!: FormGroup;
   searchValueChanges$!: Observable<BaseEntity<SearchResults>> | undefined;
 
-  constructor(private fb: FormBuilder, private searchHttp: SearchHttpService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private searchHttp: SearchHttpService
+  ) {}
 
   ngOnInit(): void {
     this.buildSearchForm();
@@ -60,5 +65,21 @@ export class NavbarComponent implements OnInit {
 
   resetSearchBar() {
     this.searchForm.reset();
+  }
+
+  navigateToMediaDetails(media: SearchResults) {
+    switch (media.media_type) {
+      case 'movie':
+        this.router.navigate(['/movie', media.id]);
+        break;
+      case 'tv':
+        this.router.navigate(['/tv', media.id]);
+        break;
+      case 'person':
+        this.router.navigate(['/actor', media.id]);
+        break;
+      default:
+        break;
+    }
   }
 }
