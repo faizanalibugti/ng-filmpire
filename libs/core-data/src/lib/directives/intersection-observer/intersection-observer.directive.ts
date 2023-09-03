@@ -21,7 +21,7 @@ export class IntersectionObserverDirective implements OnInit, OnDestroy {
           if (entry.intersectionRatio > 0.25) {
             this.renderer.addClass(entry.target, 'visible');
           }
-          if (entry.intersectionRatio > 0 && entry.intersectionRatio < 0.25) {
+          if (entry.intersectionRatio === 0) {
             this.renderer.removeClass(entry.target, 'visible');
           }
         });
