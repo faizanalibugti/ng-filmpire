@@ -1,0 +1,34 @@
+<ng-container *ngIf="slides[currentIndex] as media">
+  <div class="slider">
+    <div>
+      <div (click)="goToPrevious()" class="leftArrow">❰</div>
+      <div (click)="goToNext()" class="rightArrow">❱</div>
+    </div>
+    <div
+      [routerLink]="[isMovie(media) ? '/movie' : '/tv', media.id]"
+      class="slide flex flex-col justify-end bg-[rgba(0,0,0,0.575)] bg-cover bg-center bg-no-repeat bg-blend-darken"
+      [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
+    >
+      <div class="ml-7 h-2/5 w-1/2 p-4">
+        <h5 class="text-xl font-medium text-white">
+          {{ isMovie(media) ? media.title : media.name }}
+        </h5>
+        <p class="line-clamp-5 text-white max-sm:line-clamp-4">
+          {{ media.overview }}
+        </p>
+      </div>
+    </div>
+    <div class="dotsContainer max-sm:hidden">
+      <div
+        *ngFor="let slide of slides; let slideIndex = index"
+        class="dot"
+        [ngClass]="{
+          'text-blue-500 dark:text-red-600': currentIndex === slideIndex
+        }"
+        (click)="goToSlide(slideIndex)"
+      >
+        ●
+      </div>
+    </div>
+  </div>
+</ng-container>

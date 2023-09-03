@@ -1,0 +1,43 @@
+[data-star] {
+  text-align: center;
+  font-style: normal;
+  display: inline-block;
+  position: relative;
+  unicode-bidi: bidi-override;
+  font-size: 1.5rem;
+}
+
+[data-star]::before {
+  display: block;
+  content: '★★★★★';
+}
+
+[data-star]::after {
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '★★★★★';
+  width: 0;
+  color: rgb(250, 175, 0);
+  overflow: hidden;
+  height: 100%;
+}
+
+@for $i from 1 through 50 {
+  $rating: calc($i / 10);
+  $width: $i * 2%;
+  [data-star^='#{$rating}']::after {
+    width: $width;
+  }
+}
+
+.card {
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
