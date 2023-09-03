@@ -15,7 +15,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { appRoutes } from './app.routes';
-import { AuthInterceptor, CachingInterceptor } from '@ng-filmpire/core-data';
+import {
+  AuthInterceptor,
+  CachingInterceptor,
+  CoreDataModule,
+} from '@ng-filmpire/core-data';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +31,7 @@ import { AuthInterceptor, CachingInterceptor } from '@ng-filmpire/core-data';
     ReactiveFormsModule,
     MaterialModule,
     UiModule,
+    CoreDataModule,
     RouterModule.forRoot(appRoutes, {
       initialNavigation: 'enabledBlocking',
     }),

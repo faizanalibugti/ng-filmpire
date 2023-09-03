@@ -12,15 +12,25 @@ export const appRoutes: Route[] = [
     component: MovieInformationComponent,
   },
   {
+    path: 'tv/:id',
+    component: MovieInformationComponent,
+  },
+  {
     path: 'actor/:id',
     component: ActorsComponent,
   },
   {
-    path: ':id',
+    path: 'genre/:media/:id',
+    component: MoviesComponent,
+  },
+  {
+    path: 'category/:media/:id',
     component: MoviesComponent,
   },
   {
     path: 'profile/:id',
     component: ProfileComponent,
   },
+  { path: '', redirectTo: 'category/movie/popular', pathMatch: 'full' },
+  // { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
 ];
