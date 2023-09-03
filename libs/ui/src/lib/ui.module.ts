@@ -1,16 +1,26 @@
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { CoreDataModule } from '@ng-filmpire/core-data';
+import { MaterialModule } from '@ng-filmpire/material';
 import { ActorsComponent } from './actors/actors.component';
 import { MovieInformationComponent } from './movie-information/movie-information.component';
 import { MoviesComponent } from './movies/movies.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ProfileComponent } from './profile/profile.component';
-import { MaterialModule } from '@ng-filmpire/material';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { FeaturedMediaSliderComponent } from './featured-media-slider/featured-media-slider.component';
+import { MediaCardItemComponent } from './media-card-item/media-card-item.component';
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterModule],
+  imports: [
+    CommonModule,
+    CoreDataModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    RouterModule,
+    NgOptimizedImage,
+  ],
   declarations: [
     ActorsComponent,
     MovieInformationComponent,
@@ -18,6 +28,8 @@ import { RouterModule } from '@angular/router';
     NavbarComponent,
     ProfileComponent,
     SidebarComponent,
+    FeaturedMediaSliderComponent,
+    MediaCardItemComponent,
   ],
   exports: [
     ActorsComponent,
