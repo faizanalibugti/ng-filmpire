@@ -22,7 +22,7 @@ export interface TvShow {
   original_language: string;
   vote_count: number;
   first_air_date: Date;
-  media_type: 'tv'
+  media_type: 'tv';
 }
 
 export interface Season {

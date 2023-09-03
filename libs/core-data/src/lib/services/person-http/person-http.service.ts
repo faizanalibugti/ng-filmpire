@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  PersonDetails
-} from '@ng-filmpire/api-interfaces';
+import { PersonDetails } from '@ng-filmpire/api-interfaces';
 import { environment } from '../environments/environment';
 
 @Injectable({

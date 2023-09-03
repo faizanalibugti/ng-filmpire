@@ -24,7 +24,7 @@ export interface Movie {
   vote_count: number;
   video: boolean;
   vote_average: number;
-  media_type: 'movie'
+  media_type: 'movie';
 }
 
 export interface MovieDetail extends Movie {
