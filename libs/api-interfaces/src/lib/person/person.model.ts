@@ -1,3 +1,5 @@
+import { Credits } from '../api-interfaces';
+
 export interface Person {
   id: number;
   name: string;
@@ -16,5 +18,7 @@ export interface PersonDetails extends Person {
   homepage: string;
   imdb_id: string;
   place_of_birth: string;
+  movie_credits: Credits;
+  tv_credits: Credits;
   age?: number;
 }
