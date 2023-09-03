@@ -26,7 +26,10 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#🚀-features">Features</a>
+    </li>
+    <li>
+      <a href="#🛠️-tech-stack">Tech Stack</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
@@ -39,7 +42,25 @@
 
  <br />
 
-## About the Project
+## 🚀 Features
+
+🔍 **Search & Discover** Explore a vast library of movies and TV shows effortlessly.
+
+📋 **Details & Reviews** Dive deep into your favorite titles with comprehensive information and recommendations.
+
+📅 **Upcoming & Trending** Stay up-to-date with the latest releases and trending content.
+
+🔐 **User Profiles** Create and manage personalized user profiles.
+
+🎥 **Watchlist** Curate your own watchlist for easy access to saved content.
+
+📺 **Seamless Streaming** Watch trailers and stream content seamlessly.
+
+📡 **Real-time Updates** Get real-time updates on your favorite shows and movies.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+## 🛠️ Tech Stack
 
 This is an implementation of a Filmpire App using [The TMDB API](https://developer.themoviedb.org/docs) using:
 
@@ -70,10 +91,10 @@ This is an implementation of a Filmpire App using [The TMDB API](https://develop
 
    ```ts
    export const environment = {
-      production: true,
-      apiEnpoint: 'https://api.themoviedb.org/3',
-      apiKey: '<put your key here>',
-    };
+     production: true,
+     apiEnpoint: 'https://api.themoviedb.org/3',
+     apiKey: '<put your key here>',
+   };
    ```
 
 ## Development server
@@ -95,12 +116,13 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any and all contributions are **welcome** and **appreciated**
 
 If you have a suggestion that would make this app better, you can either:
-  
+
 1. Fork the repo and create a pull request (further details below).
 2. Or simply open an issue with the appropriate tag such as "enhancement" or "bug".
 
@@ -127,6 +149,7 @@ This product uses the TMDB API but is not endorsed or certified by TMDB.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 - [The Movie DB API](https://developers.themoviedb.org/3/getting-started/introduction)
