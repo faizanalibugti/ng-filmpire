@@ -6,6 +6,7 @@ import {
   state,
 } from '@angular/animations';
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
@@ -31,12 +32,20 @@ import { Category, Genre, SelectedMedia } from '@ng-filmpire/api-interfaces';
         animate(250, style({ transform: 'translateX(100%)' })),
       ]),
     ]),
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
+    ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnChanges {
   @Input() darkMode!: boolean;
   @Input() currentMedia!: SelectedMedia;
-  @Input() genres!: Genre[];
+  @Input() genres!: Genre[] | undefined;
 
   @Output() mediaSelected = new EventEmitter<SelectedMedia>();
 
