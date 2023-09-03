@@ -1,8 +1,8 @@
 <p class="fixed z-10 min-h-[64px] w-[calc(100vw-240px)] max-sm:w-screen">
   <mat-toolbar
-    class="bg-[#1976d2] text-white dark:bg-[#272727] w-auto place-content-center"
+    class="w-auto place-content-center bg-[#1976d2] text-white dark:bg-[#272727]"
   >
-    <mat-toolbar-row class="justify-between items-center">
+    <mat-toolbar-row class="items-center justify-between">
       <button
         mat-icon-button
         class="icon menu-icon sm:hidden"
@@ -24,11 +24,7 @@
         </ng-template>
       </button>
 
-      <form
-        [formGroup]="searchForm"
-        class="form max-sm:hidden"
-        (ngSubmit)="searchMovie()"
-      >
+      <form [formGroup]="searchForm" class="form max-sm:hidden">
         <mat-form-field>
           <mat-icon matPrefix>search</mat-icon>
           <input
@@ -36,7 +32,7 @@
             type="text"
             formControlName="search"
             matInput
-            placeholder="Search for movie, tv show, actor..."
+            placeholder="Search for movie or tv show..."
             [matAutocomplete]="auto"
           />
           <button
@@ -55,18 +51,18 @@
             [hideSingleSelectionIndicator]="true"
             #auto="matAutocomplete"
             class="dark:bg-[#121212]"
-            >
+          >
             <ng-container *ngIf="searchForm.get('search')?.value">
               <mat-option
-              *ngFor="let result of (searchValueChanges$ | async)?.results"
-              (onSelectionChange)="navigateToMediaDetails(result)"
+                *ngFor="let result of (searchValueChanges$ | async)?.results"
+                (onSelectionChange)="navigateToMediaDetails(result)"
               >
                 <div class="flex">
                   <ng-container *ngIf="result.media_type === 'movie'">
-                    <div class="mr-2 w-10 h-10">
+                    <div class="mr-2 h-10 w-10">
                       <img
                         alt="{{ result.title }} poster"
-                        class="object-cover rounded"
+                        class="rounded object-cover"
                         [src]="
                           result.poster_path
                             ? 'https://image.tmdb.org/t/p/w500/' +
@@ -77,30 +73,30 @@
                     </div>
                     <div class="flex flex-col">
                       <span
-                        class="w-52 whitespace-nowrap text-ellipsis overflow-hidden dark:text-white"
+                        class="w-52 overflow-hidden text-ellipsis whitespace-nowrap dark:text-white"
                         >{{ result.title }}</span
                       >
                       <div
-                        class="flex flex-nowrap gap-1 items-center text-gray-500 text-sm"
+                        class="flex flex-nowrap items-center gap-1 text-sm text-gray-500"
                       >
                         <span>{{ result.media_type | titlecase }}</span>
 
                         <i
                           *ngIf="result.release_date"
-                          class="dot inline-block w-1 h-1 rounded-full mx-1 my-2 bg-gray-500"
+                          class="dot mx-1 my-2 inline-block h-1 w-1 rounded-full bg-gray-500"
                         ></i>
 
                         <span *ngIf="result.release_date">{{
-                          result.release_date | date : 'yyyy'
+                          result.release_date | date: 'yyyy'
                         }}</span>
 
                         <i
-                          class="dot inline-block w-1 h-1 rounded-full mx-1 my-2 bg-gray-500"
+                          class="dot mx-1 my-2 inline-block h-1 w-1 rounded-full bg-gray-500"
                         ></i>
 
-                        <div class="flex rating">
+                        <div class="rating flex">
                           <svg
-                            class="w-4 h-4 text-yellow-300 mr-1"
+                            class="mr-1 h-4 w-4 text-yellow-300"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -111,7 +107,7 @@
                             />
                           </svg>
                           <span>{{
-                            result.vote_average | number : '1.1-1'
+                            result.vote_average | number: '1.1-1'
                           }}</span>
                         </div>
                       </div>
@@ -119,10 +115,10 @@
                   </ng-container>
 
                   <ng-container *ngIf="result.media_type === 'tv'">
-                    <div class="mr-2 w-10 h-10">
+                    <div class="mr-2 h-10 w-10">
                       <img
                         alt="{{ result.name }} poster"
-                        class="object-cover rounded"
+                        class="rounded object-cover"
                         [src]="
                           result.poster_path
                             ? 'https://image.tmdb.org/t/p/w500/' +
@@ -134,30 +130,30 @@
 
                     <div class="flex flex-col">
                       <span
-                        class="w-52 whitespace-nowrap text-ellipsis overflow-hidden dark:text-white"
+                        class="w-52 overflow-hidden text-ellipsis whitespace-nowrap dark:text-white"
                         >{{ result.name }}</span
                       >
                       <div
-                        class="flex flex-nowrap gap-1 items-center text-gray-500 text-sm"
+                        class="flex flex-nowrap items-center gap-1 text-sm text-gray-500"
                       >
                         <span>{{ result.media_type | uppercase }}</span>
 
                         <i
                           *ngIf="result.first_air_date"
-                          class="dot inline-block w-1 h-1 rounded-full mx-1 my-2 bg-gray-500"
+                          class="dot mx-1 my-2 inline-block h-1 w-1 rounded-full bg-gray-500"
                         ></i>
 
                         <span *ngIf="result.first_air_date">{{
-                          result.first_air_date | date : 'yyyy'
+                          result.first_air_date | date: 'yyyy'
                         }}</span>
 
                         <i
-                          class="dot inline-block w-1 h-1 rounded-full mx-1 my-2 bg-gray-500"
+                          class="dot mx-1 my-2 inline-block h-1 w-1 rounded-full bg-gray-500"
                         ></i>
 
-                        <div class="flex rating">
+                        <div class="rating flex">
                           <svg
-                            class="w-4 h-4 text-yellow-300 mr-1"
+                            class="mr-1 h-4 w-4 text-yellow-300"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -168,7 +164,7 @@
                             />
                           </svg>
                           <span>{{
-                            result.vote_average | number : '1.1-1'
+                            result.vote_average | number: '1.1-1'
                           }}</span>
                         </div>
                       </div>
@@ -176,10 +172,10 @@
                   </ng-container>
 
                   <ng-container *ngIf="result.media_type === 'person'">
-                    <div class="mr-2 w-10 h-10">
+                    <div class="mr-2 h-10 w-10">
                       <img
                         alt="{{ result.name }} poster"
-                        class="object-cover rounded"
+                        class="rounded object-cover"
                         [src]="
                           result.profile_path
                             ? 'https://image.tmdb.org/t/p/w500/' +
@@ -191,21 +187,21 @@
 
                     <div class="flex flex-col">
                       <span
-                        class="w-52 whitespace-nowrap text-ellipsis overflow-hidden dark:text-white"
+                        class="w-52 overflow-hidden text-ellipsis whitespace-nowrap dark:text-white"
                         >{{ result.name }}</span
                       >
                       <div
-                        class="flex flex-nowrap gap-1 items-center text-gray-500 text-sm"
+                        class="flex flex-nowrap items-center gap-1 text-sm text-gray-500"
                       >
                         <span>{{ result.media_type | titlecase }}</span>
 
                         <i
-                          class="dot inline-block w-1 h-1 rounded-full mx-1 my-2 bg-gray-500"
+                          class="dot mx-1 my-2 inline-block h-1 w-1 rounded-full bg-gray-500"
                         ></i>
 
-                        <div class="flex rating">
+                        <div class="rating flex">
                           <svg
-                            class="w-4 h-4 text-yellow-300 mr-1"
+                            class="mr-1 h-4 w-4 text-yellow-300"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="currentColor"
@@ -215,9 +211,7 @@
                               d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
                             />
                           </svg>
-                          <span>{{
-                            result.popularity | number : '1.1-1'
-                          }}</span>
+                          <span>{{ result.popularity | number: '1.1-1' }}</span>
                         </div>
                       </div>
                     </div>
@@ -235,8 +229,8 @@
       </button>
     </mat-toolbar-row>
 
-    <mat-toolbar-row class="justify-center items-center mt-5 sm:hidden">
-      <form [formGroup]="searchForm" class="form" (ngSubmit)="searchMovie()">
+    <mat-toolbar-row class="mt-5 items-center justify-center sm:hidden">
+      <form [formGroup]="searchForm" class="form">
         <mat-form-field>
           <mat-icon matPrefix>search</mat-icon>
           <input
@@ -244,7 +238,8 @@
             type="text"
             formControlName="search"
             matInput
-            placeholder="Search for movie..."
+            placeholder="Search for movie or tv show..."
+            [matAutocomplete]="auto"
           />
           <button
             *ngIf="searchForm.get('search')?.value"
