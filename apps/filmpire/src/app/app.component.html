@@ -1,32 +1,20 @@
-<div class="mat-app-background" [ngClass]="{ dark: darkMode }">
+<div ngFilmpireTheme [darkTheme]="darkMode">
   <mat-sidenav-container
-    class="flex flex-col absolute top-0 bottom-0 left-0 right-0 h-screen"
+    class="absolute bottom-0 left-0 right-0 top-0 flex h-screen flex-col"
   >
     <mat-sidenav
-      mode="side"
-      opened
-      class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:hidden"
-    >
-      <ng-container *ngIf="moiveGenres$ | async as genres">
-        <ng-filmpire-sidebar
-          [darkMode]="darkMode"
-          [genres]="genres.genres"
-        ></ng-filmpire-sidebar>
-      </ng-container>
-    </mat-sidenav>
-
-    <mat-sidenav
-      mode="over"
-      position="end"
       #snav
-      class="w-[240px] overflow-auto dark:bg-[#121212] max-sm:block"
+      [mode]="(mediaQuery$ | async)?.matches ? 'over' : 'side'"
+      [position]="(mediaQuery$ | async)?.matches ? 'end' : 'start'"
+      [opened]="(mediaQuery$ | async)?.matches ? false : true"
+      class="w-[240px] overflow-y-hidden dark:bg-[#121212]"
     >
-      <ng-container *ngIf="moiveGenres$ | async as genres">
-        <ng-filmpire-sidebar
-          [darkMode]="darkMode"
-          [genres]="genres.genres"
-        ></ng-filmpire-sidebar>
-      </ng-container>
+      <ng-filmpire-sidebar
+        [darkMode]="darkMode"
+        [currentMedia]="currentMedia"
+        [genres]="(mediaGenres$ | async)?.genres"
+        (mediaSelected)="setGenres($event)"
+      ></ng-filmpire-sidebar>
     </mat-sidenav>
 
     <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">
@@ -36,7 +24,7 @@
         (toggleMobileSidenav)="toggleMobileSidenav()"
       ></ng-filmpire-navbar>
 
-      <main class="mt-20 p-2 max-sm:mt-36">
+      <main class="mt-16 p-2 max-sm:mt-36">
         <router-outlet></router-outlet>
       </main>
     </mat-sidenav-content>
