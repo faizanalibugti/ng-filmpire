@@ -6,7 +6,15 @@ import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [IntersectionObserverDirective, ThemeDirective, AbbreviateNumberPipe],
-  exports: [IntersectionObserverDirective, ThemeDirective, AbbreviateNumberPipe],
+  declarations: [
+    IntersectionObserverDirective,
+    ThemeDirective,
+    AbbreviateNumberPipe,
+  ],
+  exports: [
+    IntersectionObserverDirective,
+    ThemeDirective,
+    AbbreviateNumberPipe,
+  ],
 })
 export class CoreDataModule {}
