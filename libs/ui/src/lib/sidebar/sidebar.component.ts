@@ -1,11 +1,4 @@
 import {
-  trigger,
-  transition,
-  style,
-  animate,
-  state,
-} from '@angular/animations';
-import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -21,25 +14,6 @@ import { Category, Genre, SelectedMedia } from '@ng-filmpire/api-interfaces';
   selector: 'ng-filmpire-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  animations: [
-    trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)' })),
-      transition('void => *', [
-        style({ transform: 'translateX(-100%)' }),
-        animate(250),
-      ]),
-      transition('* => void', [
-        animate(250, style({ transform: 'translateX(100%)' })),
-      ]),
-    ]),
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
-    ]),
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent implements OnChanges {
