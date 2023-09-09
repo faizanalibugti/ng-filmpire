@@ -9,6 +9,12 @@ import { Movie, TvShow } from '@ng-filmpire/api-interfaces';
 export class MediaCardItemComponent {
   @Input() media!: Movie | TvShow;
 
+  imageLoading = true;
+
+  onImageLoad() {
+    this.imageLoading = false;
+  }
+
   isMovie(media: Movie | TvShow): media is Movie {
     return (media as Movie).release_date !== undefined;
   }

@@ -3,18 +3,24 @@
     class="card flex cursor-pointer flex-col items-center justify-center p-3 dark:bg-[#121212]"
     ngFilmpireIntersectionObserver
   >
-    <img
-      class="rounded-xl object-cover hover:scale-[1.05]"
-      mat-card-image
-      [ngSrc]="
-        media.poster_path
-          ? 'https://image.tmdb.org/t/p/w500' + media.poster_path
-          : 'assets/media-poster-placeholder.png'
-      "
-      width="208"
-      height="320"
-      alt="{{ isMovie(media) ? media.title : media.name }} poster"
-    />
+    <div
+      class="flex h-[320px] w-[208px] items-center justify-center rounded-xl"
+    >
+      <span *ngIf="imageLoading" class="loader dark:after:bg-red-600"></span>
+      <img
+        class="absolute object-cover hover:scale-[1.05]"
+        mat-card-image
+        [ngSrc]="
+          media.poster_path
+            ? 'https://image.tmdb.org/t/p/w500' + media.poster_path
+            : 'assets/media-poster-placeholder.png'
+        "
+        width="208"
+        height="320"
+        (load)="onImageLoad()"
+        alt="{{ isMovie(media) ? media.title : media.name }} poster"
+      />
+    </div>
     <mat-card-content
       class="flex flex-col flex-nowrap items-center justify-center"
     >
