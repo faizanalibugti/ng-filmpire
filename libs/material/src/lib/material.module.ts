@@ -18,6 +18,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [CommonModule],
@@ -40,6 +42,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatPaginatorModule,
     MatButtonToggleModule,
     MatAutocompleteModule,
+    MatTabsModule,
+    MatRippleModule,
   ],
 })
 export class MaterialModule {}

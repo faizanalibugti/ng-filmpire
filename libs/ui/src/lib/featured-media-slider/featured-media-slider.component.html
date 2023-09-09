@@ -1,8 +1,26 @@
 <ng-container *ngIf="slides[currentIndex] as media">
   <div class="slider">
     <div>
-      <div (click)="goToPrevious()" class="leftArrow">❰</div>
-      <div (click)="goToNext()" class="rightArrow">❱</div>
+      <div
+        matRipple
+        [matRippleCentered]="true"
+        [matRippleRadius]="30"
+        [matRippleUnbounded]="true"
+        (click)="goToPrevious()"
+        class="leftArrow"
+      >
+        ❰
+      </div>
+      <div
+        matRipple
+        [matRippleCentered]="true"
+        [matRippleRadius]="30"
+        [matRippleUnbounded]="true"
+        (click)="goToNext()"
+        class="rightArrow"
+      >
+        ❱
+      </div>
     </div>
     <div
       [routerLink]="[isMovie(media) ? '/movie' : '/tv', media.id]"
