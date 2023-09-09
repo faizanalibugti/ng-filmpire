@@ -1,3 +1,6 @@
+<ng-container *ngIf="authToken$ | async"></ng-container>
+<ng-container *ngIf="userDetails$ | async"></ng-container>
+
 <p class="fixed z-10 min-h-[64px] w-[calc(100vw-240px)] max-sm:w-screen">
   <mat-toolbar
     class="w-auto place-content-center bg-[#1976d2] text-white dark:bg-[#272727]"
@@ -223,10 +226,29 @@
         </mat-form-field>
       </form>
 
-      <button mat-button class="icon" aria-label="account icon">
-        <p>LOGIN</p>
-        <mat-icon>account_circle</mat-icon>
-      </button>
+      <ng-container *ngIf="userDetails$ | async as user; else logIn">
+        <button
+          routerLink="/profile/{{ user.id }}"
+          mat-button
+          class="icon"
+          aria-label="account icon"
+        >
+          <p>MY MOVIES</p>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </ng-container>
+
+      <ng-template #logIn>
+        <button
+          (click)="authenticateUser()"
+          mat-button
+          class="icon"
+          aria-label="account icon"
+        >
+          <p>LOGIN</p>
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </ng-template>
     </mat-toolbar-row>
 
     <mat-toolbar-row class="mt-5 items-center justify-center sm:hidden">
