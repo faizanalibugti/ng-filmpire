@@ -1,51 +1,55 @@
-<a [routerLink]="[isMovie(media) ? '/movie' : '/tv', media.id]">
-  <mat-card
-    class="card flex cursor-pointer flex-col items-center justify-center p-3 dark:bg-[#121212]"
-    ngFilmpireIntersectionObserver
-  >
-    <div
-      class="flex h-[320px] w-[208px] items-center justify-center rounded-xl"
+<ng-container *ngIf="media">
+  <a [routerLink]="[isMovie(media) ? '/movie' : '/tv', media.id]">
+    <mat-card
+      class="card flex cursor-pointer flex-col items-center justify-center p-3 dark:bg-[#121212]"
+      ngFilmpireIntersectionObserver
     >
-      <span *ngIf="imageLoading" class="loader dark:after:bg-red-600"></span>
-      <img
-        class="absolute object-cover hover:scale-[1.05]"
-        mat-card-image
-        [ngSrc]="
-          media.poster_path
-            ? 'https://image.tmdb.org/t/p/w500' + media.poster_path
-            : 'assets/media-poster-placeholder.png'
-        "
-        width="208"
-        height="320"
-        (load)="onImageLoad()"
-        alt="{{ isMovie(media) ? media.title : media.name }} poster"
-      />
-    </div>
-    <mat-card-content
-      class="flex flex-col flex-nowrap items-center justify-center"
-    >
-      <p class="mt-4 flex w-full justify-between self-start px-4">
-        <span class="text-gray-500">{{
-          (isMovie(media) ? media.release_date : media.first_air_date)
-            | date: 'yyyy'
-        }}</span>
-        <span
-          class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
-          >{{ (isMovie(media) ? 'movie' : 'tv') | uppercase }}</span
-        >
-      </p>
-      <h5
-        #mediaTitle
-        class="mb-0 mt-3 w-56 overflow-hidden text-ellipsis whitespace-nowrap text-center text-xl font-medium"
-        [matTooltip]="isMovie(media) ? media.title : media.name"
-        [matTooltipDisabled]="mediaTitle.scrollWidth <= mediaTitle.clientWidth"
+      <div
+        class="flex h-[320px] w-[208px] items-center justify-center rounded-xl"
       >
-        {{ isMovie(media) ? media.title : media.name }}
-      </h5>
-      <span
-        [attr.data-star]="(media.vote_average / 10) * 5 | number: '1.1-1'"
-        matTooltip="{{ media.vote_average }}"
-      ></span>
-    </mat-card-content>
-  </mat-card>
-</a>
+        <span *ngIf="imageLoading" class="loader dark:after:bg-red-600"></span>
+        <img
+          class="absolute object-cover hover:scale-[1.05]"
+          mat-card-image
+          [ngSrc]="
+            media.poster_path
+              ? 'https://image.tmdb.org/t/p/w500' + media.poster_path
+              : 'assets/media-poster-placeholder.png'
+          "
+          width="208"
+          height="320"
+          (load)="onImageLoad()"
+          alt="{{ isMovie(media) ? media.title : media.name }} poster"
+        />
+      </div>
+      <mat-card-content
+        class="flex flex-col flex-nowrap items-center justify-center"
+      >
+        <p class="mt-4 flex w-full justify-between self-start px-4">
+          <span class="text-gray-500">{{
+            (isMovie(media) ? media.release_date : media.first_air_date)
+              | date: 'yyyy'
+          }}</span>
+          <span
+            class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
+            >{{ (isMovie(media) ? 'movie' : 'tv') | uppercase }}</span
+          >
+        </p>
+        <h5
+          #mediaTitle
+          class="mb-0 mt-3 w-56 overflow-hidden text-ellipsis whitespace-nowrap text-center text-xl font-medium"
+          [matTooltip]="isMovie(media) ? media.title : media.name"
+          [matTooltipDisabled]="
+            mediaTitle.scrollWidth <= mediaTitle.clientWidth
+          "
+        >
+          {{ isMovie(media) ? media.title : media.name }}
+        </h5>
+        <span
+          [attr.data-star]="(media.vote_average / 10) * 5 | number: '1.1-1'"
+          matTooltip="{{ media.vote_average }}"
+        ></span>
+      </mat-card-content>
+    </mat-card>
+  </a>
+</ng-container>

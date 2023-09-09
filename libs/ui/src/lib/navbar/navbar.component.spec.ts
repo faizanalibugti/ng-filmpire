@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavbarComponent } from './navbar.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MaterialModule } from '@ng-filmpire/material';
 import { ReactiveFormsModule } from '@angular/forms';
 describe('NavbarComponent', () => {
@@ -15,6 +16,7 @@ describe('NavbarComponent', () => {
         NoopAnimationsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,
+        RouterTestingModule,
         MaterialModule,
       ],
       declarations: [NavbarComponent],

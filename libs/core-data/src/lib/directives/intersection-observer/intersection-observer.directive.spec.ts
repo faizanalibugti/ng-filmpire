@@ -59,9 +59,9 @@ describe('IntersectionObserverDirective', () => {
     );
   });
 
-  it('should remove class "visible" when intersectionRatio is between 0 and 0.25', () => {
+  it('should remove class "visible" when intersectionRatio is 0', () => {
     (global as any).IntersectionObserver = jest.fn((callback, options) => {
-      callback([{ intersectionRatio: 0.2, target: elMock.nativeElement }]);
+      callback([{ intersectionRatio: 0, target: elMock.nativeElement }]);
       return intersectionObserverMock;
     });
 
