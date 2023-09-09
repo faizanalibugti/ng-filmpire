@@ -1,3 +1,4 @@
+export * from './auth/auth.model';
 export * from './base-entity/base-entity.model';
 export * from './genre/genre.model';
 export * from './search/search.model';

@@ -48,6 +48,8 @@ export interface Cast {
   character: string;
   credit_id: string;
   order: number;
+  release_date: Date;
+  first_air_date: Date;
 }
 
 export interface Crew {
