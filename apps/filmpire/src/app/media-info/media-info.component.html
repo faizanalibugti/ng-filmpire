@@ -1,0 +1,202 @@
+<ng-container *ngIf="mediaDetails$ | async as mediaDetail; else loading">
+  <div #topOfPage class="scroll-mt-40">
+    <div class="container px-4 py-8">
+      <div class="flex justify-evenly max-sm:block">
+        <div
+          class="max-sm:mb-4 max-sm:flex max-sm:w-full max-sm:place-content-center"
+        >
+          <img
+            [src]="
+              mediaDetail.poster_path
+                ? 'https://image.tmdb.org/t/p/w300' + mediaDetail.poster_path
+                : 'assets/media-poster-placeholder.png'
+            "
+            alt="{{
+              currentSelectedMedia === 'movie'
+                ? 'Movie Poster'
+                : 'TV Show Poster'
+            }}"
+            width="300"
+            height="450"
+            class="rounded-lg shadow-md shadow-gray-600"
+          />
+        </div>
+        <div class="w-2/3 pl-8 max-sm:w-full max-sm:pl-0">
+          <h1 class="text-center text-4xl font-semibold">
+            <ng-container
+              *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+            >
+              {{ mediaDetail.title }}
+            </ng-container>
+            <ng-container
+              *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+            >
+              {{ mediaDetail.name }}
+            </ng-container>
+            (
+            <ng-container
+              *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+            >
+              {{ mediaDetail.release_date | date: 'yyyy' }}
+            </ng-container>
+            <ng-container
+              *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+            >
+              {{ mediaDetail.first_air_date | date: 'yyyy' }} -
+            </ng-container>
+
+            <ng-container
+              *ngIf="
+                currentSelectedMedia === 'tv' &&
+                isTV(mediaDetail) &&
+                mediaDetail.status === 'Ended'
+              "
+            >
+              {{ mediaDetail.last_air_date | date: 'yyyy' }}
+            </ng-container>
+            )
+          </h1>
+
+          <h2
+            class="mt-4 text-center text-2xl italic"
+            *ngIf="mediaDetail.tagline"
+          >
+            "{{ mediaDetail.tagline }}"
+          </h2>
+
+          <div class="flex items-baseline justify-between gap-6">
+            <div class="mt-4 flex items-center">
+              <span class="mr-1 text-xl text-yellow-500">&#9733;</span>
+              <span class="text-xl text-gray-600 dark:text-white">{{
+                mediaDetail.vote_average | number: '1.1-1'
+              }}</span>
+              <span class="text-xl text-gray-600"> /10 </span>
+              <sub *ngIf="mediaDetail.vote_count" class="ml-1 text-gray-600"
+                >({{ mediaDetail.vote_count | abbreviateNumber }})</sub
+              >
+            </div>
+
+            <div class="font-serif text-xl font-medium text-gray-600">
+              <ng-container
+                *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+              >
+                {{ mediaDetail.runtime }} min ●
+              </ng-container>
+
+              <ng-container
+                *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+              >
+                TV Series ●
+              </ng-container>
+
+              <ng-container
+                *ngIf="
+                  currentSelectedMedia === 'tv' &&
+                  isTV(mediaDetail) &&
+                  mediaDetail.episode_run_time.length > 0
+                "
+              >
+                {{ mediaDetail.episode_run_time | slice: 0 - 1 }} min ●
+              </ng-container>
+
+              <ng-container
+                *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+              >
+                {{ mediaDetail.release_date | date: 'mediumDate' }} ●
+              </ng-container>
+              <ng-container
+                *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+              >
+                {{ mediaDetail.first_air_date | date: 'mediumDate' }} ●
+              </ng-container>
+
+              {{ languageNames.of(mediaDetail.original_language) }}
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <h2 class="text-2xl font-semibold">Overview</h2>
+            <p
+              *ngIf="mediaDetail.overview; else noOverview"
+              class="mt-2 font-normal text-gray-700 dark:text-white"
+            >
+              {{ mediaDetail.overview }}
+            </p>
+          </div>
+          <div class="mt-6">
+            <h2 class="text-2xl font-semibold">Top Cast</h2>
+            <div class="mt-2 flex gap-1 overflow-x-auto">
+              <ng-container
+                *ngIf="mediaDetail.credits.cast.length > 0; else noCast"
+              >
+                <ng-container *ngFor="let actor of mediaDetail.credits.cast">
+                  <a
+                    class="min-w-[25%] cursor-pointer max-sm:min-w-[40%]"
+                    [routerLink]="['/actor', actor.id]"
+                  >
+                    <img
+                      [src]="
+                        actor.profile_path
+                          ? 'https://image.tmdb.org/t/p/w500' +
+                            actor.profile_path
+                          : 'assets/actor_avatar_placeholder.jpg'
+                      "
+                      alt="{{ actor.name }}"
+                      class="mx-auto h-[150px] w-full max-w-[100px] rounded-lg object-cover"
+                    />
+                    <p class="mt-1 text-center text-sm">{{ actor.name }}</p>
+                    <p class="mt-1 text-center text-sm text-gray-600">
+                      {{ actor.character }}
+                    </p>
+                  </a>
+                </ng-container>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+        You may also like...
+      </h2>
+    </div>
+    <div class="grid-cols-card grid gap-6">
+      <ng-container
+        *ngIf="
+          mediaDetail.recommendations.results.length > 0;
+          else noRecommendations
+        "
+      >
+        <ng-container
+          *ngFor="let media of $any(mediaDetail.recommendations.results)"
+        >
+          <ng-filmpire-media-card-item
+            [media]="media"
+          ></ng-filmpire-media-card-item>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #noOverview>
+  <p class="italic">No overview available</p>
+</ng-template>
+
+<ng-template #noCast>
+  <p class="italic">No cast details available</p>
+</ng-template>
+
+<ng-template #noRecommendations>
+  <p class="italic">No recommendations available</p>
+</ng-template>
+
+<ng-template #loading>
+  <div class="flex w-full items-center justify-center">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-template>
