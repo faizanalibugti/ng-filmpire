@@ -2,6 +2,8 @@
 
 ![CI Status](https://github.com/faizanalibugti/ng-filmpire/actions/workflows/ci.yml/badge.svg)
 
+[![Deploy Status](https://api.netlify.com/api/v1/badges/b3ecf05e-cea9-4231-bdef-4ac0af998980/deploy-status)](https://app.netlify.com/sites/lambent-gelato-342591/deploys)
+
 <div align="center">
   <img src="apps\filmpire\src\assets\darkLogo.png" align="center">
 </div>
@@ -12,7 +14,7 @@
   [Angular, Angular Material, Tailwind CSS, NgRx]
   <br />
   <br />
-  <a href="https://ng-filmpire.netlify.app/">View Demo Site (TBD)</a>
+  <a href="https://ng-filmpire.netlify.app/">View Demo Site</a>
   ·
   <a href="https://github.com/faizanalibugti/ng-filmpire/issues">Report Bug</a>
   ·
