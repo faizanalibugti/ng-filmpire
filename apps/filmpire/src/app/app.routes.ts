@@ -1,35 +1,33 @@
 import { Route } from '@angular/router';
-import {
-  ActorsComponent,
-  MovieInformationComponent,
-  MoviesComponent,
-  ProfileComponent,
-} from '@ng-filmpire/ui';
+import { AccountComponent } from './account/account.component';
+import { MediaInfoComponent } from './media-info/media-info.component';
+import { MediaListComponent } from './media-list/media-list.component';
+import { PersonInfoComponent } from './person-info/person-info.component';
 
 export const appRoutes: Route[] = [
   {
     path: 'movie/:id',
-    component: MovieInformationComponent,
+    component: MediaInfoComponent,
   },
   {
     path: 'tv/:id',
-    component: MovieInformationComponent,
+    component: MediaInfoComponent,
   },
   {
     path: 'actor/:id',
-    component: ActorsComponent,
+    component: PersonInfoComponent,
   },
   {
     path: 'genre/:media/:id',
-    component: MoviesComponent,
+    component: MediaListComponent,
   },
   {
     path: 'category/:media/:id',
-    component: MoviesComponent,
+    component: MediaListComponent,
   },
   {
     path: 'profile/:id',
-    component: ProfileComponent,
+    component: AccountComponent,
   },
   { path: '', redirectTo: 'category/movie/popular', pathMatch: 'full' },
   // { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
