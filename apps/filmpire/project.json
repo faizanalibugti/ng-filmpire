@@ -28,7 +28,7 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",
@@ -38,8 +38,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/filmpire/src/environments/environment.ts",
-              "with": "apps/filmpire/src/environments/environment.prod.ts"
+              "replace": "libs/core-data/src/lib/services/environments/environment.ts",
+              "with": "libs/core-data/src/lib/services/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"

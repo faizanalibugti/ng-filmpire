@@ -1,5 +1,7 @@
 export * from './lib/core-data.module';
 
+export * from './lib/services/environments/environment';
+
 export * from './lib/interceptors/auth/auth.interceptor';
 export * from './lib/interceptors/caching/caching.interceptor';
 
