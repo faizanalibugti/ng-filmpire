@@ -69,15 +69,25 @@
 
 <div class="absolute bottom-0">
   <mat-divider></mat-divider>
+  <div class="m-4 flex">
+    <a
+      href="https://www.themoviedb.org/"
+      target="_blank"
+      matTooltip="This product uses the TMDB API but is not endorsed or certified by TMDB."
+    >
+      <img class="w-2/5" src="assets/tmdb_logo.svg" alt="tmdb attribution" />
+    </a>
 
-  <a
-    href="https://www.themoviedb.org/"
-    target="_blank"
-    class="my-5 flex justify-center"
-    matTooltip="This product uses the TMDB API but is not endorsed or certified by TMDB."
-  >
-    <img class="w-2/5" src="assets/tmdb_logo.svg" alt="tmdb attribution" />
-  </a>
+    <a
+      href="https://github.com/faizanalibugti/ng-filmpire"
+      target="_blank"
+      matTooltip="View code on GitHub"
+    >
+      <i
+        class="fab fa-github fa-lg dark:text-black dark:text-opacity-[unset]"
+      ></i>
+    </a>
+  </div>
 </div>
 
 <ng-template #loading>
