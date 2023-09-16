@@ -26,12 +26,13 @@
             </p>
             <iframe
               class="mb-5"
-              width="500"
+              width="560"
               height="315"
               frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              [src]="video.videoURL"
+              [title]="video.name"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share;"
               allowfullscreen
-              [src]="generateSafeURL(video.key)"
             >
             </iframe>
           </div>

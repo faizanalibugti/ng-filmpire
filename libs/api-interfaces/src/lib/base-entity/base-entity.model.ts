@@ -1,3 +1,5 @@
+import { SafeResourceUrl } from '@angular/platform-browser';
+
 export interface BaseEntity<T> {
   page: number;
   results: T[];
@@ -82,6 +84,7 @@ export interface Video {
   official: boolean;
   published_at: string;
   id: string;
+  videoURL?: SafeResourceUrl;
 }
 
 export interface VideoEnity {

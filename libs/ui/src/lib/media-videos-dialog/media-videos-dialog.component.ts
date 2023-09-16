@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Video } from '@ng-filmpire/api-interfaces';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Video } from '@ng-filmpire/api-interfaces';
 
 @Component({
   selector: 'ng-filmpire-media-videos-dialog',
@@ -28,6 +28,8 @@ export class MediaVideosDialogComponent implements OnInit {
         // If the type doesn't exist as a key, create an empty array for it
         videoDictionary[video.type] = [];
       }
+
+      video.videoURL = this.generateSafeURL(video.key);
 
       // Push the video into the corresponding type array
       videoDictionary[video.type].push(video);
