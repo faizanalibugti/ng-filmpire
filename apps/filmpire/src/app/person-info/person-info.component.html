@@ -3,7 +3,7 @@
     <div class="mt-4 basis-1/6">
       <img
         class="rounded-lg shadow-md shadow-gray-600 max-sm:mx-auto max-sm:w-1/2"
-        [ngSrc]="
+        [src]="
           actor.profile_path
             ? 'https://image.tmdb.org/t/p/w500' + actor.profile_path
             : 'assets/actor_avatar_placeholder.jpg'
@@ -31,21 +31,24 @@
       <div class="mt-4 flex justify-between">
         <a
           *ngIf="actor.imdb_id"
+          class="bg-[#1976d2] dark:bg-[#dc1a28]"
           href="https://www.imdb.com/name/{{ actor.imdb_id }}"
+          mat-fab
+          extended
           target="_blank"
-          rel="noopener noreferrer"
-          class="transform rounded-lg border bg-blue-600 px-6 py-3 text-white transition-transform hover:scale-105 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <i class="fab fa-imdb"></i>
           IMDb
         </a>
 
         <button
+          class="bg-[#1976d2] dark:bg-[#dc1a28]"
+          mat-fab
+          extended
           (click)="navigateToPreviousPage()"
-          class="transform rounded-lg border bg-gray-400 px-6 py-3 text-white transition-transform hover:scale-105 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300"
         >
-          <i class="fas fa-arrow-left"></i>
-          Go Back
+          <mat-icon>arrow_back</mat-icon>
+          Back
         </button>
       </div>
     </div>
@@ -58,29 +61,41 @@
 
     <mat-tab-group>
       <mat-tab label="Movies">
-        <div class="grid-cols-card grid gap-6">
-          <ng-container
-            *ngIf="actor.movie_credits.cast.length > 0; else noMedia"
+        <ng-container *ngIf="actor.movie_credits.cast.length > 0; else noMedia">
+          <cdk-virtual-scroll-viewport
+            itemSize="200"
+            minBufferPx="1200"
+            maxBufferPx="1200"
+            class="h-[500px] overflow-x-hidden"
           >
-            <ng-container *ngFor="let media of $any(actor.movie_credits.cast)">
+            <ng-container
+              *cdkVirtualFor="let media of $any(actor.movie_credits.cast)"
+            >
               <ng-filmpire-media-card-item
                 [media]="media"
               ></ng-filmpire-media-card-item>
             </ng-container>
-          </ng-container>
-        </div>
+          </cdk-virtual-scroll-viewport>
+        </ng-container>
       </mat-tab>
 
       <mat-tab label="TV Shows">
-        <div class="grid-cols-card grid gap-6">
-          <ng-container *ngIf="actor.tv_credits.cast.length > 0; else noMedia">
-            <ng-container *ngFor="let media of $any(actor.tv_credits.cast)">
+        <ng-container *ngIf="actor.tv_credits.cast.length > 0; else noMedia">
+          <cdk-virtual-scroll-viewport
+            itemSize="200"
+            minBufferPx="1200"
+            maxBufferPx="1200"
+            class="h-[500px] overflow-x-hidden"
+          >
+            <ng-container
+              *cdkVirtualFor="let media of $any(actor.tv_credits.cast)"
+            >
               <ng-filmpire-media-card-item
                 [media]="media"
               ></ng-filmpire-media-card-item>
             </ng-container>
-          </ng-container>
-        </div>
+          </cdk-virtual-scroll-viewport>
+        </ng-container>
       </mat-tab>
     </mat-tab-group>
   </div>
