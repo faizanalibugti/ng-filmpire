@@ -1,0 +1,46 @@
+<div mat-dialog-title class="dialog-title">
+  <h2>Videos</h2>
+  <button mat-icon-button aria-label="close dialog" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="mat-typography">
+  <ng-container
+    *ngIf="
+      mediaVideosEntity && (mediaVideosEntity | keyvalue).length > 0;
+      else noVideos
+    "
+  >
+    <mat-tab-group>
+      <ng-container *ngFor="let entry of mediaVideosEntity | keyvalue">
+        <mat-tab [label]="entry.key">
+          <div
+            class="flex flex-col items-center justify-center gap-5"
+            *ngFor="let video of entry.value"
+          >
+            <p
+              class="w-80 overflow-hidden text-ellipsis pt-2 text-center text-base font-medium dark:text-white"
+            >
+              {{ video.site }} | {{ video.name }} |
+              {{ video.official ? 'Official' : '' }}
+            </p>
+            <iframe
+              class="mb-5"
+              width="500"
+              height="315"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              [src]="generateSafeURL(video.key)"
+            >
+            </iframe>
+          </div>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
+  </ng-container>
+</mat-dialog-content>
+
+<ng-template #noVideos>
+  <p class="italic">No videos available</p>
+</ng-template>

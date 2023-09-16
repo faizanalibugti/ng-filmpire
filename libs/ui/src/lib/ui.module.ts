@@ -8,6 +8,7 @@ import { FeaturedMediaSliderComponent } from './featured-media-slider/featured-m
 import { MediaCardItemComponent } from './media-card-item/media-card-item.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { MediaVideosDialogComponent } from './media-videos-dialog/media-videos-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -22,12 +23,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SidebarComponent,
     FeaturedMediaSliderComponent,
     MediaCardItemComponent,
+    MediaVideosDialogComponent,
   ],
   exports: [
     NavbarComponent,
     SidebarComponent,
     MediaCardItemComponent,
     FeaturedMediaSliderComponent,
+    MediaVideosDialogComponent,
   ],
 })
 export class UiModule {}
