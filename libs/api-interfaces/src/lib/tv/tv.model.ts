@@ -38,6 +38,7 @@ export interface TvShowDetail extends TvShow {
   episode_run_time: number[];
   genres: Genre[];
   homepage: string;
+  imdb_id: string;
   in_production: boolean;
   languages: string[];
   networks: Network[];
