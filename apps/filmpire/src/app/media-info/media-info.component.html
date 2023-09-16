@@ -153,6 +153,53 @@
               </ng-container>
             </div>
           </div>
+
+          <div class="mt-6 flex justify-between gap-3 max-sm:flex-col">
+            <a
+              *ngIf="mediaDetail.homepage"
+              class="bg-[#1976d2] dark:bg-[#dc1a28]"
+              [href]="mediaDetail.homepage"
+              mat-fab
+              extended
+              target="_blank"
+            >
+              <mat-icon>language</mat-icon>
+              Website
+            </a>
+
+            <a
+              *ngIf="mediaDetail.imdb_id"
+              class="bg-[#1976d2] dark:bg-[#dc1a28]"
+              href="https://www.imdb.com/title/{{ mediaDetail.imdb_id }}"
+              mat-fab
+              extended
+              target="_blank"
+            >
+              <mat-icon>tv</mat-icon>
+              IMDb
+            </a>
+
+            <button
+              class="bg-[#1976d2] dark:bg-[#dc1a28]"
+              *ngIf="mediaDetail.videos.results.length > 0"
+              mat-fab
+              extended
+              (click)="openVideosDialog(mediaDetail.videos.results)"
+            >
+              <mat-icon>movie</mat-icon>
+              Videos
+            </button>
+
+            <button
+              class="bg-[#1976d2] dark:bg-[#dc1a28]"
+              mat-fab
+              extended
+              (click)="navigateToPreviousPage()"
+            >
+              <mat-icon>arrow_back</mat-icon>
+              Back
+            </button>
+          </div>
         </div>
       </div>
     </div>

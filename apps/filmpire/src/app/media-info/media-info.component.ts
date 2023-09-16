@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -5,13 +6,16 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {
   MovieDetail,
   SelectedMedia,
   TvShowDetail,
+  Video,
 } from '@ng-filmpire/api-interfaces';
 import { MovieHttpService, TvHttpService } from '@ng-filmpire/core-data';
+import { MediaVideosDialogComponent } from '@ng-filmpire/ui';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 
@@ -32,7 +36,9 @@ export class MediaInfoComponent implements OnInit {
   constructor(
     private movieHttp: MovieHttpService,
     private tvHttp: TvHttpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private location: Location
   ) {}
 
   ngOnInit(): void {
@@ -56,11 +62,23 @@ export class MediaInfoComponent implements OnInit {
     );
   }
 
+  openVideosDialog(videos: Video[]) {
+    this.dialog.open(MediaVideosDialogComponent, {
+      data: {
+        videos,
+      },
+    });
+  }
+
   scrollToTop() {
     this.topOfPage?.nativeElement.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
+  }
+
+  navigateToPreviousPage() {
+    this.location.back();
   }
 
   isMovie(media: MovieDetail | TvShowDetail): media is MovieDetail {
