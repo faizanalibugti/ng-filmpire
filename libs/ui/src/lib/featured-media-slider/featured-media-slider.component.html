@@ -25,7 +25,7 @@
     <div
       [routerLink]="[isMovie(media) ? '/movie' : '/tv', media.id]"
       class="slide flex flex-col justify-end bg-[rgba(0,0,0,0.575)] bg-cover bg-center bg-no-repeat bg-blend-darken"
-      [ngStyle]="{ 'background-image': getCurrentSlideUrl() }"
+      [ngStyle]="{ 'background-image': getCurrentSlideUrl((mediaQuery$ | async)?.matches) }"
     >
       <div class="ml-7 h-2/5 w-1/2 p-4 max-sm:w-10/12">
         <h5 class="text-xl font-medium text-white">

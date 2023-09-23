@@ -1,5 +1,7 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, Input } from '@angular/core';
 import { Movie, TvShow } from '@ng-filmpire/api-interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ng-filmpire-featured-media-slider',
@@ -10,6 +12,11 @@ export class FeaturedMediaSliderComponent {
   @Input() slides: (Movie | TvShow)[] = [];
 
   currentIndex = 0;
+  mediaQuery$: Observable<BreakpointState> = this.breakpointObserver.observe([
+    '(max-width: 640px)',
+  ]);
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
 
   goToPrevious(): void {
     const isFirstSlide = this.currentIndex === 0;
@@ -31,8 +38,10 @@ export class FeaturedMediaSliderComponent {
     this.currentIndex = slideIndex;
   }
 
-  getCurrentSlideUrl() {
-    return `url(https://image.tmdb.org/t/p/w780${
+  getCurrentSlideUrl(isMobile: boolean | undefined) {
+    const imageSize = isMobile ? 'w342': 'w780'
+
+    return `url(https://image.tmdb.org/t/p/${imageSize}${
       this.slides[this.currentIndex].backdrop_path
     })`;
   }
