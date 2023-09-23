@@ -68,7 +68,7 @@
                         class="rounded object-cover"
                         [src]="
                           result.poster_path
-                            ? 'https://image.tmdb.org/t/p/w500/' +
+                            ? 'https://image.tmdb.org/t/p/w185/' +
                               result.poster_path
                             : 'assets/media-poster-placeholder.png'
                         "
@@ -124,7 +124,7 @@
                         class="rounded object-cover"
                         [src]="
                           result.poster_path
-                            ? 'https://image.tmdb.org/t/p/w500/' +
+                            ? 'https://image.tmdb.org/t/p/w185/' +
                               result.poster_path
                             : 'assets/media-poster-placeholder.png'
                         "
@@ -181,7 +181,7 @@
                         class="rounded object-cover"
                         [src]="
                           result.profile_path
-                            ? 'https://image.tmdb.org/t/p/w500/' +
+                            ? 'https://image.tmdb.org/t/p/w185/' +
                               result.profile_path
                             : 'assets/actor_avatar_placeholder.jpg'
                         "
@@ -243,7 +243,7 @@
           (click)="authenticateUser()"
           mat-button
           class="icon"
-          aria-label="account icon"
+          aria-label="Login"
         >
           <p>LOGIN</p>
           <mat-icon>account_circle</mat-icon>

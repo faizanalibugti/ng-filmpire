@@ -137,12 +137,13 @@
                     <img
                       [src]="
                         actor.profile_path
-                          ? 'https://image.tmdb.org/t/p/w500' +
+                          ? 'https://image.tmdb.org/t/p/w185' +
                             actor.profile_path
                           : 'assets/actor_avatar_placeholder.jpg'
                       "
                       alt="{{ actor.name }}"
                       class="mx-auto h-[150px] w-full max-w-[100px] rounded-lg object-cover"
+                      loading="lazy"
                     />
                     <p class="mt-1 text-center text-sm">{{ actor.name }}</p>
                     <p class="mt-1 text-center text-sm text-gray-600">

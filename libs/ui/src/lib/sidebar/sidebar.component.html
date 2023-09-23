@@ -3,6 +3,8 @@
     class="w-3/4"
     [src]="darkMode ? 'assets/darkLogo.png' : 'assets/lightLogo.png'"
     alt="logo"
+    width="180"
+    height="60"
   />
 </a>
 
@@ -36,7 +38,7 @@
           ><img
             class="dark:invert"
             src="assets/genres and categories/{{ category.name }}.png"
-            [alt]="category.name"
+            alt=""
             height="24"
             width="24"
         /></span>
@@ -59,7 +61,7 @@
           ><img
             class="dark:invert"
             src="assets/genres and categories/{{ genre.name | lowercase }}.png"
-            [alt]="genre.name"
+            alt=""
             height="24"
             width="24"
         /></span>
@@ -69,27 +71,32 @@
   </mat-nav-list>
 </ng-container>
 
-<div class="absolute bottom-0">
-  <mat-divider></mat-divider>
-  <div class="m-4 flex">
-    <a
-      href="https://www.themoviedb.org/"
-      target="_blank"
-      matTooltip="This product uses the TMDB API but is not endorsed or certified by TMDB."
-    >
-      <img class="w-2/5" src="assets/tmdb_logo.svg" alt="tmdb attribution" />
-    </a>
+<mat-divider></mat-divider>
 
-    <a
-      href="https://github.com/faizanalibugti/ng-filmpire"
-      target="_blank"
-      matTooltip="View code on GitHub"
-    >
-      <i
-        class="fab fa-github fa-lg dark:text-black dark:text-opacity-[unset]"
-      ></i>
-    </a>
-  </div>
+<div class="m-4 flex justify-between">
+  <a
+    href="https://www.themoviedb.org/"
+    target="_blank"
+    matTooltip="This product uses the TMDB API but is not endorsed or certified by TMDB."
+  >
+    <img
+      width="75"
+      height="30"
+      src="assets/tmdb_logo.svg"
+      alt="tmdb attribution"
+    />
+  </a>
+
+  <a
+    href="https://github.com/faizanalibugti/ng-filmpire"
+    target="_blank"
+    matTooltip="View code on GitHub"
+    aria-label="View code on GitHub"
+  >
+    <i
+      class="fab fa-github fa-lg dark:text-black dark:text-opacity-[unset]"
+    ></i>
+  </a>
 </div>
 
 <ng-template #loading>

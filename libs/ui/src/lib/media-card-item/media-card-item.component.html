@@ -48,7 +48,7 @@
         </h5>
         <span
           [attr.data-star]="(media.vote_average / 10) * 5 | number: '1.1-1'"
-          matTooltip="{{ media.vote_average }}"
+          matTooltip="{{ media.vote_average | number: '1.1-1' }}"
         ></span>
       </mat-card-content>
     </mat-card>
