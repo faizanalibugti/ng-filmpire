@@ -32,7 +32,7 @@ export class FeaturedMediaSliderComponent {
   }
 
   getCurrentSlideUrl() {
-    return `url(https://image.tmdb.org/t/p/original${
+    return `url(https://image.tmdb.org/t/p/w780${
       this.slides[this.currentIndex].backdrop_path
     })`;
   }
