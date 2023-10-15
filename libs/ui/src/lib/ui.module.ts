@@ -6,9 +6,9 @@ import { CoreDataModule } from '@ng-filmpire/core-data';
 import { MaterialModule } from '@ng-filmpire/material';
 import { FeaturedMediaSliderComponent } from './featured-media-slider/featured-media-slider.component';
 import { MediaCardItemComponent } from './media-card-item/media-card-item.component';
+import { MediaVideosDialogComponent } from './media-videos-dialog/media-videos-dialog.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { MediaVideosDialogComponent } from './media-videos-dialog/media-videos-dialog.component';
 @NgModule({
   imports: [
     CommonModule,
