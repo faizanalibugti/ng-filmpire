@@ -1,1 +1,101 @@
-<p>account works!</p>
+<ng-container *ngIf="profileData$ | async as profile">
+  <div class="flex justify-between p-4">
+    <h1 class="mb-10 text-3xl font-semibold dark:text-white">My Profile</h1>
+
+    <button mat-button extended (click)="logout()">
+      Logout
+      <span class="fas fa-sign-out-alt"></span>
+    </button>
+  </div>
+
+  <div class="p-4">
+    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+        Favorite Movies
+      </h2>
+    </div>
+
+    <div class="grid-cols-card grid gap-6">
+      <ng-container
+        *ngIf="profile.favoriteMovies.results.length > 0; else emptyList"
+      >
+        <ng-container
+          *ngFor="let media of $any(profile.favoriteMovies.results)"
+        >
+          <ng-filmpire-media-card-item
+            [media]="media"
+          ></ng-filmpire-media-card-item>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+        Favorite TV Shows
+      </h2>
+    </div>
+
+    <div class="grid-cols-card grid gap-6">
+      <ng-container
+        *ngIf="profile.favoriteTV.results.length > 0; else emptyList"
+      >
+        <ng-container *ngFor="let media of $any(profile.favoriteTV.results)">
+          <ng-filmpire-media-card-item
+            [media]="media"
+          ></ng-filmpire-media-card-item>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+        Movies Watchlist
+      </h2>
+    </div>
+
+    <div class="grid-cols-card grid gap-6">
+      <ng-container
+        *ngIf="profile.watchListMovies.results.length > 0; else emptyList"
+      >
+        <ng-container
+          *ngFor="let media of $any(profile.watchListMovies.results)"
+        >
+          <ng-filmpire-media-card-item
+            [media]="media"
+          ></ng-filmpire-media-card-item>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+        TV Shows Watchlist
+      </h2>
+    </div>
+
+    <div class="grid-cols-card grid gap-6">
+      <ng-container
+        *ngIf="profile.watchListTV.results.length > 0; else emptyList"
+      >
+        <ng-container *ngFor="let media of $any(profile.watchListTV.results)">
+          <ng-filmpire-media-card-item
+            [media]="media"
+          ></ng-filmpire-media-card-item>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #emptyList>
+  <p class="col-span-full italic">
+    No items to show. Please add a media to either favorite or watchlist for the
+    item to appear here
+  </p>
+</ng-template>
