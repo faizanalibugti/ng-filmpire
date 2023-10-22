@@ -31,5 +31,5 @@ export function sendRequest(
  * @returns boolean
  */
 export function isCacheable(request: HttpRequest<unknown>): boolean {
-  return request.method === 'GET';
+  return request.method === 'GET' && !request.urlWithParams.includes('account');
 }
