@@ -16,6 +16,9 @@ export class AuthService {
     return `${this.API_ENDPOINT}/${this.model}`;
   }
 
+  user!: User | undefined;
+  sessionId!: string | undefined;
+
   /**
    *
    * @param http {HttpClient}
@@ -45,6 +48,7 @@ export class AuthService {
         .pipe(
           tap(({ success, session_id }) => {
             if (success) {
+              this.sessionId = session_id;
               localStorage.setItem('session_id', session_id);
             }
           })
@@ -74,6 +78,8 @@ export class AuthService {
   }
 
   logOut() {
+    this.user = undefined;
+    this.sessionId = undefined;
     localStorage.clear();
   }
 }

@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BaseEntity, Movie, MovieDetail } from '@ng-filmpire/api-interfaces';
+import {
+  AccountStates,
+  BaseEntity,
+  Movie,
+  MovieDetail,
+} from '@ng-filmpire/api-interfaces';
 import { environment } from '../environments/environment';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +28,7 @@ export class MovieHttpService {
    *
    * @param http {HttpClient}
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getMovies(
     genreIdOrCategoryName: string | number = 'popular',
@@ -64,7 +70,22 @@ export class MovieHttpService {
 
   getMovieDetails(id: number) {
     return this.http.get<MovieDetail>(`${this.baseUrl}/${id}`, {
-      params: { append_to_response: 'recommendations,videos,credits' },
+      params: {
+        append_to_response: 'recommendations,videos,credits',
+      },
     });
+  }
+
+  getMovieAccountState(id: number) {
+    const session_id = this.auth.sessionId as string;
+
+    return this.http.get<AccountStates>(
+      `${this.baseUrl}/${id}/account_states`,
+      {
+        params: {
+          session_id,
+        },
+      }
+    );
   }
 }

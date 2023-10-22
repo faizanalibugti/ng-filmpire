@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
-import { BaseEntity, TvShow, TvShowDetail } from '@ng-filmpire/api-interfaces';
+import {
+  AccountStates,
+  BaseEntity,
+  TvShow,
+  TvShowDetail,
+} from '@ng-filmpire/api-interfaces';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +28,7 @@ export class TvHttpService {
    *
    * @param http {HttpClient}
    */
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   getTVShows(
     genreIdOrCategoryName: string | number = 'popular',
@@ -64,7 +70,22 @@ export class TvHttpService {
 
   getTVShowDetails(id: number) {
     return this.http.get<TvShowDetail>(`${this.baseUrl}/${id}`, {
-      params: { append_to_response: 'recommendations,videos,credits' },
+      params: {
+        append_to_response: 'recommendations,videos,credits',
+      },
     });
+  }
+
+  getTVAccountState(id: number) {
+    const session_id = this.auth.sessionId as string;
+
+    return this.http.get<AccountStates>(
+      `${this.baseUrl}/${id}/account_states`,
+      {
+        params: {
+          session_id,
+        },
+      }
+    );
   }
 }

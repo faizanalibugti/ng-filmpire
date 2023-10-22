@@ -1,3 +1,5 @@
+import { BaseEntity, Movie, TvShow } from '../api-interfaces';
+
 export interface AuthToken {
   success: boolean;
   expires_at: Date;
@@ -24,4 +26,11 @@ export interface User {
   name: string;
   include_adult: boolean;
   username: string;
+}
+
+export interface ProfileData {
+  favoriteMovies: BaseEntity<Movie>;
+  favoriteTV: BaseEntity<TvShow>;
+  watchListMovies: BaseEntity<Movie>;
+  watchListTV: BaseEntity<TvShow>;
 }

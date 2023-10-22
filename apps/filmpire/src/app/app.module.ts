@@ -13,6 +13,11 @@ import {
 import { MaterialModule } from '@ng-filmpire/material';
 import { UiModule } from '@ng-filmpire/ui';
 import { EffectsModule } from '@ngrx/effects';
+import {
+  RouterState,
+  StoreRouterConnectingModule,
+  routerReducer,
+} from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AccountComponent } from './account/account.component';
@@ -44,7 +49,9 @@ import { environment } from '@ng-filmpire/core-data';
       initialNavigation: 'enabledBlocking',
     }),
     StoreModule.forRoot(
-      {},
+      {
+        router: routerReducer,
+      },
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
@@ -54,6 +61,9 @@ import { environment } from '@ng-filmpire/core-data';
       }
     ),
     EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({
+      routerState: RouterState.Minimal,
+    }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [

@@ -90,3 +90,12 @@ export interface Video {
 export interface VideoEnity {
   results: Video[];
 }
+
+export interface AccountStates {
+  id: number;
+  favorite: boolean;
+  rated: {
+    value: number;
+  };
+  watchlist: boolean;
+}
