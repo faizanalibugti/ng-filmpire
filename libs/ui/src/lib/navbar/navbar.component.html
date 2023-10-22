@@ -226,9 +226,9 @@
         </mat-form-field>
       </form>
 
-      <ng-container *ngIf="userDetails$ | async as user; else logIn">
+      <ng-container *ngIf="authService.user; else logIn">
         <button
-          routerLink="/profile/{{ user.id }}"
+          routerLink="/profile/{{ authService.user.id }}"
           mat-button
           class="icon"
           aria-label="account icon"

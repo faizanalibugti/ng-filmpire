@@ -48,7 +48,7 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private searchHttp: SearchHttpService,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class NavbarComponent implements OnInit {
           this.authService.getUserDetails(),
         ])
       ),
-      map(([, { ...user }]) => user as User)
+      map(([, { ...user }]) => (this.authService.user = user as User))
     );
   }
 
