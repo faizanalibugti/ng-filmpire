@@ -114,6 +114,26 @@
             </div>
           </div>
 
+          <div class="mt-6 flex flex-wrap items-baseline justify-center gap-4">
+            <ng-container *ngFor="let genre of mediaDetail.genres">
+              <a
+                class="flex items-center justify-center hover:scale-110"
+                [routerLink]="['/genre', currentSelectedMedia, genre.id]"
+              >
+                <img
+                  class="mr-2 dark:invert"
+                  src="assets/genres and categories/{{
+                    genre.name | lowercase
+                  }}.png"
+                  alt=""
+                  height="30"
+                  width="30"
+                />
+                <div class="font-medium">{{ genre.name | titlecase }}</div>
+              </a>
+            </ng-container>
+          </div>
+
           <div class="mt-6">
             <h2 class="text-2xl font-semibold">Overview</h2>
             <p
@@ -155,11 +175,12 @@
             </div>
           </div>
 
-          <div class="mt-6 flex justify-between gap-3 max-sm:flex-col">
+          <div class="mt-6 flex justify-between gap-3 max-md:flex-col">
             <a
-              *ngIf="mediaDetail.homepage"
+              *ngIf="mediaDetail.homepage && !accountId"
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
               [href]="mediaDetail.homepage"
+              matTooltip="Visit Official Website"
               mat-fab
               extended
               target="_blank"
@@ -172,6 +193,7 @@
               *ngIf="mediaDetail.imdb_id"
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
               href="https://www.imdb.com/title/{{ mediaDetail.imdb_id }}"
+              matTooltip="Visit imDB page"
               mat-fab
               extended
               target="_blank"
@@ -183,6 +205,7 @@
             <button
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
               *ngIf="mediaDetail.videos.results.length > 0"
+              matTooltip="Watch trailers"
               mat-fab
               extended
               (click)="openVideosDialog(mediaDetail.videos.results)"
@@ -191,8 +214,59 @@
               Videos
             </button>
 
+            <ng-container *ngIf="accountId">
+              <ng-container *ngIf="accountState as account">
+                <button
+                  class="bg-[#1976d2] dark:bg-[#dc1a28]"
+                  mat-fab
+                  extended
+                  [matTooltip]="
+                    account.favorite
+                      ? 'Remove from Favorites'
+                      : 'Add to Favorites'
+                  "
+                  (click)="
+                    addToFavorite(
+                      mediaDetail.id,
+                      currentSelectedMedia,
+                      !account.favorite
+                    )
+                  "
+                >
+                  <mat-icon>{{
+                    account.favorite ? 'favorite' : 'favorite_border'
+                  }}</mat-icon>
+                  {{ account.favorite ? 'Unfavorite' : 'Favorite' }}
+                </button>
+
+                <button
+                  class="bg-[#1976d2] dark:bg-[#dc1a28]"
+                  mat-fab
+                  [matTooltip]="
+                    account.watchlist
+                      ? 'Remove from Watchlist'
+                      : 'Add to Watchlist'
+                  "
+                  extended
+                  (click)="
+                    addToWatchlist(
+                      mediaDetail.id,
+                      currentSelectedMedia,
+                      !account.watchlist
+                    )
+                  "
+                >
+                  <mat-icon>{{
+                    account.watchlist ? 'remove' : 'add'
+                  }}</mat-icon>
+                  Watchlist
+                </button>
+              </ng-container>
+            </ng-container>
+
             <button
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
+              matTooltip="Go to previous page"
               mat-fab
               extended
               (click)="navigateToPreviousPage()"

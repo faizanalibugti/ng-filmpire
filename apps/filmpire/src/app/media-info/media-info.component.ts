@@ -1,20 +1,19 @@
 import { Location } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import {
+  AccountStates,
   MovieDetail,
   SelectedMedia,
   TvShowDetail,
   Video,
 } from '@ng-filmpire/api-interfaces';
-import { MovieHttpService, TvHttpService } from '@ng-filmpire/core-data';
+import {
+  AccountService,
+  MovieHttpService,
+  TvHttpService,
+} from '@ng-filmpire/core-data';
 import { MediaVideosDialogComponent } from '@ng-filmpire/ui';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
@@ -23,25 +22,30 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
   selector: 'ng-filmpire-media-info',
   templateUrl: './media-info.component.html',
   styleUrls: ['./media-info.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MediaInfoComponent implements OnInit {
   @ViewChild('topOfPage') topOfPage!: ElementRef;
 
   currentSelectedMedia!: SelectedMedia;
   mediaDetails$!: Observable<TvShowDetail | MovieDetail>;
+  accountState!: AccountStates;
 
   languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
+
+  accountId!: number | undefined;
 
   constructor(
     private movieHttp: MovieHttpService,
     private tvHttp: TvHttpService,
+    private accountHttp: AccountService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private location: Location
   ) {}
 
   ngOnInit(): void {
+    this.accountId = this.accountHttp.accountId;
+
     const firstUrlSegment = this.route.snapshot.url[0];
 
     if (firstUrlSegment) {
@@ -60,6 +64,20 @@ export class MediaInfoComponent implements OnInit {
         this.scrollToTop();
       })
     );
+
+    if (this.accountId) {
+      this.route.params
+        .pipe(
+          filter(({ id }) => !!id),
+          map(({ id }) => Number(id)),
+          switchMap((id: number) =>
+            this.currentSelectedMedia === 'tv'
+              ? this.tvHttp.getTVAccountState(id)
+              : this.movieHttp.getMovieAccountState(id)
+          )
+        )
+        .subscribe((data) => (this.accountState = data));
+    }
   }
 
   openVideosDialog(videos: Video[]) {
@@ -67,6 +85,24 @@ export class MediaInfoComponent implements OnInit {
       data: {
         videos,
       },
+    });
+  }
+
+  addToFavorite(mediaId: number, media: SelectedMedia, favorite: boolean) {
+    this.accountHttp.addToFavourite(mediaId, media, favorite).subscribe(() => {
+      this.accountState = {
+        ...this.accountState,
+        favorite,
+      };
+    });
+  }
+
+  addToWatchlist(mediaId: number, media: SelectedMedia, watchlist: boolean) {
+    this.accountHttp.addToWatchList(mediaId, media, watchlist).subscribe(() => {
+      this.accountState = {
+        ...this.accountState,
+        watchlist,
+      };
     });
   }
 

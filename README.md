@@ -62,11 +62,9 @@
 
 📺 **Seamless Streaming** Watch trailers and stream content seamlessly.
 
-### Upcoming Features
-
 🔐 **User Profiles** Create and manage personalized user profiles.
 
-🎥 **Watchlist** Curate your own watchlist for easy access to saved content.
+🎥 **Watchlist & Favorites** Curate your own watchlist and favorite movies & TV shows for easy access to saved content.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
