@@ -31,7 +31,7 @@
         'background-image': getCurrentSlideUrl((mediaQuery$ | async)?.matches)
       }"
     >
-      <div class="ml-7 h-2/5 w-1/2 p-4 max-sm:w-10/12">
+      <div class="ml-14 h-2/5 w-1/2 p-4 max-sm:w-10/12">
         <h5 class="text-xl font-medium text-white">
           {{ isMovie(media) ? media.title : media.name }}
         </h5>
@@ -40,17 +40,31 @@
         </p>
       </div>
     </div>
-    <div class="dotsContainer max-sm:hidden">
-      <div
-        *ngFor="let slide of slides; let slideIndex = index"
-        class="dot"
-        [ngClass]="{
-          'text-blue-500 dark:text-red-600': currentIndex === slideIndex
-        }"
-        (click)="goToSlide(slideIndex)"
-      >
-        ●
+    <div class="slider-nav-wrapper max-sm:hidden">
+      <div class="slider-nav flex justify-between">
+        <div
+          *ngFor="let slide of slides; let slideIndex = index"
+          class="dot"
+          [ngClass]="{
+            'text-blue-500 dark:text-red-600': currentIndex === slideIndex
+          }"
+          (click)="goToSlide(slideIndex)"
+        >
+          ●
+        </div>
       </div>
+
+      <button
+        mat-mini-fab
+        class="play-slides bg-blue-500 dark:bg-red-600"
+        (click)="togglePlayPause()"
+      >
+        <!-- <span
+          class="far"
+          [class]="(isPlaying$ | async) ? 'fa-pause-circle' : 'fa-play-circle'"
+        ></span> -->
+        <mat-icon>{{ (isPlaying$ | async) ? 'pause' : 'play_arrow' }}</mat-icon>
+      </button>
     </div>
   </div>
 </ng-container>

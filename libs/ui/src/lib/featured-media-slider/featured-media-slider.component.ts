@@ -1,7 +1,7 @@
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Component, Input, OnInit } from '@angular/core';
 import { Movie, TvShow } from '@ng-filmpire/api-interfaces';
-import { Observable, interval, tap } from 'rxjs';
+import { BehaviorSubject, Observable, interval, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'ng-filmpire-featured-media-slider',
@@ -17,10 +17,27 @@ export class FeaturedMediaSliderComponent implements OnInit {
   ]);
   changeSlide$!: Observable<number>;
 
+  private isPlayingSubject = new BehaviorSubject<boolean>(true);
+  isPlaying$: Observable<boolean> = this.isPlayingSubject.asObservable();
+  private changeSlideInterval = 7000;
+
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this.changeSlide$ = interval(10000).pipe(tap(() => this.goToNext()));
+    this.changeSlide$ = this.isPlaying$.pipe(
+      switchMap((isPlaying) => {
+        if (isPlaying) {
+          return interval(this.changeSlideInterval).pipe(
+            tap(() => this.goToNext())
+          );
+        }
+        return interval(0); // An observable that doesn't emit anything when paused.
+      })
+    );
+  }
+
+  togglePlayPause() {
+    this.isPlayingSubject.next(!this.isPlayingSubject.value);
   }
 
   goToPrevious(): void {
