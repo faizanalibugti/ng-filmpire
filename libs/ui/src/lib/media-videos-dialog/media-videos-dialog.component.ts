@@ -10,6 +10,7 @@ import { Video } from '@ng-filmpire/api-interfaces';
 })
 export class MediaVideosDialogComponent implements OnInit {
   mediaVideosEntity!: Record<string, Video[]>;
+  iframeLoading = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { videos: Video[] },
@@ -18,6 +19,10 @@ export class MediaVideosDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.mediaVideosEntity = this.mapVideoToDictionary(this.data.videos);
+  }
+
+  onIframeLoad() {
+    this.iframeLoading = false;
   }
 
   mapVideoToDictionary(videos: Video[]): Record<string, Video[]> {
