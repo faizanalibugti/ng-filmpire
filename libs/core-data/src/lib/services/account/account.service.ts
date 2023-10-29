@@ -36,7 +36,7 @@ export class AccountService {
   getFavoriteMovies(
     accountId: number,
     session_id: string = this.sessionId,
-    page: number = 1
+    page = 1
   ) {
     return this.http.get<BaseEntity<Movie>>(
       `${this.baseUrl}/${accountId}/favorite/movies`,
@@ -49,7 +49,7 @@ export class AccountService {
   getFavouriteTV(
     accountId: number,
     session_id: string = this.sessionId,
-    page: number = 1
+    page = 1
   ) {
     return this.http.get<BaseEntity<TvShow>>(
       `${this.baseUrl}/${accountId}/favorite/tv`,
@@ -62,7 +62,7 @@ export class AccountService {
   getWatchListMovies(
     accountId: number,
     session_id: string = this.sessionId,
-    page: number = 1
+    page = 1
   ) {
     return this.http.get<BaseEntity<Movie>>(
       `${this.baseUrl}/${accountId}/watchlist/movies`,
@@ -75,7 +75,7 @@ export class AccountService {
   getWatchListTV(
     accountId: number,
     session_id: string = this.sessionId,
-    page: number = 1
+    page = 1
   ) {
     return this.http.get<BaseEntity<TvShow>>(
       `${this.baseUrl}/${accountId}/watchlist/tv`,

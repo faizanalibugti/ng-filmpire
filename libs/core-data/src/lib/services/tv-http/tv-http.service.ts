@@ -32,7 +32,7 @@ export class TvHttpService {
 
   getTVShows(
     genreIdOrCategoryName: string | number = 'popular',
-    page: number = 1
+    page = 1
   ) {
     // Get TV Shows by Category
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {

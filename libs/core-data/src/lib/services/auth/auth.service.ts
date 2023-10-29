@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthSession, AuthToken, User } from '@ng-filmpire/api-interfaces';
-import { delay, tap } from 'rxjs';
+import { tap } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({

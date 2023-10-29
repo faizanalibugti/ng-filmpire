@@ -32,7 +32,7 @@ export class MovieHttpService {
 
   getMovies(
     genreIdOrCategoryName: string | number = 'popular',
-    page: number = 1
+    page = 1
   ) {
     // Get Movies by Category
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
