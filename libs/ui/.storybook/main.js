@@ -1,8 +1,16 @@
 module.exports = {
-  core: { builder: 'webpack5' },
   stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/addon-essentials'],
   staticDirs: [{ from: '../src/assets', to: '/assets' }],
+
+  framework: {
+    name: '@storybook/angular',
+    options: {},
+  },
+
+  docs: {
+    autodocs: true,
+  },
 };
 
 // To customize your webpack configuration you can use the webpackFinal field.

@@ -1,10 +1,10 @@
+import { MaterialModule } from '@ng-filmpire/material';
 import {
   Meta,
   componentWrapperDecorator,
   moduleMetadata,
 } from '@storybook/angular';
 import { FeaturedMediaSliderComponent } from './featured-media-slider.component';
-import { MaterialModule } from '@ng-filmpire/material';
 
 export default {
   title: 'FeaturedMediaSliderComponent',
