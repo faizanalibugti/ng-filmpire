@@ -30,10 +30,7 @@ export class MovieHttpService {
    */
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getMovies(
-    genreIdOrCategoryName: string | number = 'popular',
-    page = 1
-  ) {
+  getMovies(genreIdOrCategoryName: string | number = 'popular', page = 1) {
     // Get Movies by Category
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
       if (genreIdOrCategoryName === 'trending') {

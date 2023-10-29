@@ -30,10 +30,7 @@ export class TvHttpService {
    */
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getTVShows(
-    genreIdOrCategoryName: string | number = 'popular',
-    page = 1
-  ) {
+  getTVShows(genreIdOrCategoryName: string | number = 'popular', page = 1) {
     // Get TV Shows by Category
     if (genreIdOrCategoryName && typeof genreIdOrCategoryName === 'string') {
       if (genreIdOrCategoryName === 'trending') {
