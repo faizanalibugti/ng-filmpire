@@ -1,3 +1,11 @@
+.card {
+  opacity: 0;
+
+  .mat-card-content {
+    display: flex;
+  }
+}
+
 [data-star] {
   text-align: center;
   font-style: normal;
@@ -30,10 +38,6 @@
   [data-star^='#{$rating}']::after {
     width: $width;
   }
-}
-
-.card {
-  opacity: 0;
 }
 
 .visible {

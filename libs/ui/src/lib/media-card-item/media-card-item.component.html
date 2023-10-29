@@ -9,8 +9,7 @@
       >
         <span *ngIf="imageLoading" class="loader dark:after:bg-red-600"></span>
         <img
-          class="absolute object-cover hover:scale-[1.05]"
-          mat-card-image
+          class="absolute rounded object-cover hover:scale-[1.05]"
           [src]="
             media.poster_path
               ? 'https://image.tmdb.org/t/p/w342' + media.poster_path
@@ -24,12 +23,12 @@
         />
       </div>
       <mat-card-content
-        class="flex flex-col flex-nowrap items-center justify-center"
+        class="mat-card-content flex flex-col flex-nowrap items-center justify-center"
       >
         <p class="mt-4 flex w-full justify-between self-start px-4">
           <span class="text-gray-500">{{
             (isMovie(media) ? media.release_date : media.first_air_date)
-              | date: 'yyyy'
+              | date : 'yyyy'
           }}</span>
           <span
             class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
@@ -47,8 +46,8 @@
           {{ isMovie(media) ? media.title : media.name }}
         </h5>
         <span
-          [attr.data-star]="(media.vote_average / 10) * 5 | number: '1.1-1'"
-          matTooltip="{{ media.vote_average | number: '1.1-1' }}"
+          [attr.data-star]="(media.vote_average / 10) * 5 | number : '1.1-1'"
+          matTooltip="{{ media.vote_average | number : '1.1-1' }}"
         ></span>
       </mat-card-content>
     </mat-card>
