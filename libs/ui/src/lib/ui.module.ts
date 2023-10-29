@@ -9,6 +9,7 @@ import { MediaCardItemComponent } from './media-card-item/media-card-item.compon
 import { MediaVideosDialogComponent } from './media-videos-dialog/media-videos-dialog.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { AutocompleteResultsComponent } from './autocomplete-results/autocomplete-results.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,6 +25,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     FeaturedMediaSliderComponent,
     MediaCardItemComponent,
     MediaVideosDialogComponent,
+    AutocompleteResultsComponent,
   ],
   exports: [
     NavbarComponent,
