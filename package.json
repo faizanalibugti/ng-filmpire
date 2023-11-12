@@ -93,6 +93,6 @@
     "webpack": "^5.64.0"
   },
   "optionalDependencies": {
-    "@nrwl/nx-linux-x64-gnu": "15.8.1"
+    "@nx/nx-linux-x64-gnu": "17.0.2"
   }
 }
