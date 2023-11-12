@@ -3,7 +3,7 @@ import { AccountComponent } from './account/account.component';
 import { MediaInfoComponent } from './media-info/media-info.component';
 import { MediaListComponent } from './media-list/media-list.component';
 import { PersonInfoComponent } from './person-info/person-info.component';
-import { PageNotFoundComponent } from 'libs/ui/src/lib/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from '@ng-filmpire/ui';
 
 export const appRoutes: Route[] = [
   {
