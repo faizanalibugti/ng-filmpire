@@ -57,12 +57,9 @@
       <button
         mat-mini-fab
         class="play-slides bg-blue-500 dark:bg-red-600"
+        aria-label="Play Carousel"
         (click)="togglePlayPause()"
       >
-        <!-- <span
-          class="far"
-          [class]="(isPlaying$ | async) ? 'fa-pause-circle' : 'fa-play-circle'"
-        ></span> -->
         <mat-icon>{{ (isPlaying$ | async) ? 'pause' : 'play_arrow' }}</mat-icon>
       </button>
     </div>

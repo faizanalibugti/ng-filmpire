@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AutocompleteResultsComponent } from './autocomplete-results.component';
+import { MaterialModule } from '@ng-filmpire/material';
 
 describe('AutocompleteResultsComponent', () => {
   let component: AutocompleteResultsComponent;
@@ -8,6 +9,7 @@ describe('AutocompleteResultsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [MaterialModule],
       declarations: [AutocompleteResultsComponent],
     }).compileComponents();
 

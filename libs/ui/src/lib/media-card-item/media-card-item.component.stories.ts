@@ -48,7 +48,7 @@ export const TV = {
   },
 };
 
-export const image_loading = {
+export const ImageLoading = {
   args: {
     media: {
       name: 'Loki',
@@ -62,7 +62,7 @@ export const image_loading = {
   },
 };
 
-export const fallback_image = {
+export const FallbackImage = {
   args: {
     media: {
       name: 'Loki',

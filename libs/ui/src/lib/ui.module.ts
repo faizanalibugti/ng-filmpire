@@ -10,6 +10,7 @@ import { MediaVideosDialogComponent } from './media-videos-dialog/media-videos-d
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AutocompleteResultsComponent } from './autocomplete-results/autocomplete-results.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +27,7 @@ import { AutocompleteResultsComponent } from './autocomplete-results/autocomplet
     MediaCardItemComponent,
     MediaVideosDialogComponent,
     AutocompleteResultsComponent,
+    PageNotFoundComponent,
   ],
   exports: [
     NavbarComponent,
@@ -33,6 +35,7 @@ import { AutocompleteResultsComponent } from './autocomplete-results/autocomplet
     MediaCardItemComponent,
     FeaturedMediaSliderComponent,
     MediaVideosDialogComponent,
+    PageNotFoundComponent,
   ],
 })
 export class UiModule {}

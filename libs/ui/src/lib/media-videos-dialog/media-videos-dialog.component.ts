@@ -28,7 +28,7 @@ export class MediaVideosDialogComponent implements OnInit {
   mapVideoToDictionary(videos: Video[]): Record<string, Video[]> {
     const videoDictionary: Record<string, Video[]> = {};
 
-    for (const video of videos) {
+    videos.map((video) => {
       if (!videoDictionary[video.type]) {
         // If the type doesn't exist as a key, create an empty array for it
         videoDictionary[video.type] = [];
@@ -38,7 +38,7 @@ export class MediaVideosDialogComponent implements OnInit {
 
       // Push the video into the corresponding type array
       videoDictionary[video.type].push(video);
-    }
+    });
 
     return videoDictionary;
   }

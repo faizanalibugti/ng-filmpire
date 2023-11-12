@@ -33,10 +33,10 @@
     "@ngrx/entity": "16.0.1",
     "@ngrx/router-store": "16.0.1",
     "@ngrx/store": "16.0.1",
+    "@nx/angular": "17.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "0.13.3",
-    "@nx/angular": "17.0.2"
+    "zone.js": "0.13.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.8",
@@ -52,13 +52,20 @@
     "@ngrx/schematics": "16.0.1",
     "@ngrx/store-devtools": "16.0.1",
     "@nx/cypress": "17.0.2",
+    "@nx/eslint": "17.0.2",
+    "@nx/eslint-plugin": "17.0.2",
+    "@nx/jest": "17.0.2",
     "@nx/js": "17.0.2",
     "@nx/storybook": "17.0.2",
     "@nx/workspace": "17.0.2",
     "@schematics/angular": "16.2.8",
     "@storybook/addon-essentials": "7.5.1",
+    "@storybook/addon-interactions": "^7.5.1",
     "@storybook/angular": "7.5.1",
     "@storybook/core-server": "7.5.1",
+    "@storybook/jest": "~0.1.0",
+    "@storybook/test-runner": "^0.13.0",
+    "@storybook/testing-library": "~0.2.0",
     "@types/jest": "29.5.6",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "5.60.1",
@@ -84,9 +91,6 @@
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",
     "typescript": "5.1.6",
-    "webpack": "^5.64.0",
-    "@nx/eslint": "17.0.2",
-    "@nx/jest": "17.0.2",
-    "@nx/eslint-plugin": "17.0.2"
+    "webpack": "^5.64.0"
   }
 }

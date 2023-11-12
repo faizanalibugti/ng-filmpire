@@ -25,7 +25,7 @@
       <mat-card-content
         class="mat-card-content flex flex-col flex-nowrap items-center justify-center"
       >
-        <p class="mt-4 flex w-full justify-between self-start px-4">
+        <div class="mt-4 flex w-full justify-between self-start px-4">
           <span class="text-gray-500">{{
             (isMovie(media) ? media.release_date : media.first_air_date)
               | date : 'yyyy'
@@ -34,10 +34,10 @@
             class="mr-2 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900 dark:text-blue-300"
             >{{ (isMovie(media) ? 'movie' : 'tv') | uppercase }}</span
           >
-        </p>
+        </div>
         <h5
           #mediaTitle
-          class="mb-0 mt-3 w-56 overflow-hidden text-ellipsis whitespace-nowrap text-center text-xl font-medium"
+          class="mb-0 mt-3 w-56 overflow-hidden text-ellipsis whitespace-nowrap px-4 text-center text-xl font-medium"
           [matTooltip]="isMovie(media) ? media.title : media.name"
           [matTooltipDisabled]="
             mediaTitle.scrollWidth <= mediaTitle.clientWidth

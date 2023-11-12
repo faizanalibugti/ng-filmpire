@@ -73,10 +73,11 @@
 This is an implementation of a Filmpire App using [The TMDB API](https://developer.themoviedb.org/docs) using:
 
 - Nx Workspace
-- Angular v15
+- Angular v16
 - Angular Material
 - NgRx
 - Tailwind CSS
+- Storybook
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

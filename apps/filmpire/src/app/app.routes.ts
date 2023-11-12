@@ -3,6 +3,7 @@ import { AccountComponent } from './account/account.component';
 import { MediaInfoComponent } from './media-info/media-info.component';
 import { MediaListComponent } from './media-list/media-list.component';
 import { PersonInfoComponent } from './person-info/person-info.component';
+import { PageNotFoundComponent } from 'libs/ui/src/lib/page-not-found/page-not-found.component';
 
 export const appRoutes: Route[] = [
   {
@@ -30,5 +31,5 @@ export const appRoutes: Route[] = [
     component: AccountComponent,
   },
   { path: '', redirectTo: 'category/movie/popular', pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
+  { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
 ];
