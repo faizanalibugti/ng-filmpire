@@ -2,17 +2,17 @@
   <div class="grid-cols-card grid scroll-mt-32 gap-6 p-6" #topOfPage>
     <div class="col-[1/-1] mb-10 h-[490px] cursor-pointer justify-end">
       <ng-filmpire-featured-media-slider
-      [slides]="multimedia.mediaList | slice : 0 : 20"
+        [slides]="multimedia.mediaList | slice : 0 : 20"
       ></ng-filmpire-featured-media-slider>
     </div>
-    
+
     <ng-container *ngFor="let media of multimedia.mediaList">
       <ng-filmpire-media-card-item
-      [media]="media"
+        [media]="media"
       ></ng-filmpire-media-card-item>
     </ng-container>
   </div>
-  
+
   <ng-container *ngIf="multimedia.loaded; else loading">
     <!-- <mat-paginator
       [length]="multimedia.pagination!.total_results"
@@ -26,6 +26,9 @@
 
 <ng-template #loading>
   <div class="flex w-full items-center justify-center">
-    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <mat-progress-spinner
+      mode="indeterminate"
+      [diameter]="20"
+    ></mat-progress-spinner>
   </div>
 </ng-template>

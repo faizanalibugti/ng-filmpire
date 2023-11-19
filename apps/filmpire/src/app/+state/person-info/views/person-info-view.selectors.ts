@@ -9,8 +9,9 @@ import { PersonInfoPage } from '../models/person-info.model';
 export const selectPersonInfoPage = createSelector(
   selectPersonDetails,
   selectPersonInfoLoaded,
-  (personDetails: PersonDetails, loaded: boolean) => ({
-    personDetails,
-    loaded,
-  }) as PersonInfoPage
+  (personDetails: PersonDetails, loaded: boolean) =>
+    ({
+      personDetails,
+      loaded,
+    } as PersonInfoPage)
 );

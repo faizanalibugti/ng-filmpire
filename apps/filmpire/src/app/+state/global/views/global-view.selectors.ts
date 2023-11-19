@@ -14,11 +14,12 @@ export const selectGlobalPage = createSelector(
   selectCurrentMedia,
   selectGenres,
   selectUser,
-  (darkMode, isMobile, currentMedia, genres, user) => ({
-    darkMode,
-    isMobile,
-    currentMedia,
-    genres,
-    user,
-  }) as GlobalPage
+  (darkMode, isMobile, currentMedia, genres, user) =>
+    ({
+      darkMode,
+      isMobile,
+      currentMedia,
+      genres,
+      user,
+    } as GlobalPage)
 );

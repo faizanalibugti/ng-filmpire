@@ -10,9 +10,10 @@ export const selectMediaListPage = createSelector(
   selectAllMediaList,
   selectPagination,
   selectMediaListLoaded,
-  (mediaList, pagination, loaded) => ({
-    mediaList,
-    pagination,
-    loaded,
-  }) as MediaListPage
+  (mediaList, pagination, loaded) =>
+    ({
+      mediaList,
+      pagination,
+      loaded,
+    } as MediaListPage)
 );

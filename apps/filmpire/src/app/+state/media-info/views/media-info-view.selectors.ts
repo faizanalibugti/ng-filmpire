@@ -12,10 +12,11 @@ export const selectMediaInfoPage = createSelector(
   selectAccountState,
   selectCurrentMedia,
   selectMediaInfoLoaded,
-  (mediaInfo, accountState, currentMedia, loaded) => ({
-    mediaInfo,
-    accountState,
-    currentMedia,
-    loaded,
-  }) as MediaInfoPage
+  (mediaInfo, accountState, currentMedia, loaded) =>
+    ({
+      mediaInfo,
+      accountState,
+      currentMedia,
+      loaded,
+    } as MediaInfoPage)
 );
