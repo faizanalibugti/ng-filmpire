@@ -27,6 +27,8 @@ import { MediaInfoComponent } from './media-info/media-info.component';
 import { MediaListComponent } from './media-list/media-list.component';
 import { PersonInfoComponent } from './person-info/person-info.component';
 import { environment } from '@ng-filmpire/core-data';
+import { AppStateFeaturesModule } from './app-state-features.module';
+import { AppStateEffectsModule } from './app-state-effects.module';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { environment } from '@ng-filmpire/core-data';
       routerState: RouterState.Minimal,
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    AppStateFeaturesModule,
+    AppStateEffectsModule,
   ],
   providers: [
     {
