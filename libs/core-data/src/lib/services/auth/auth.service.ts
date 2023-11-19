@@ -16,9 +16,6 @@ export class AuthService {
     return `${this.API_ENDPOINT}/${this.model}`;
   }
 
-  user!: User | undefined;
-  sessionId!: string | undefined;
-
   /**
    *
    * @param http {HttpClient}
@@ -37,49 +34,37 @@ export class AuthService {
     );
   }
 
-  createSessionId() {
-    const token = localStorage.getItem('request_token');
-
-    if (token) {
-      return this.http
-        .post<AuthSession>(`${this.baseUrl}/session/new`, {
-          request_token: token,
+  createSessionId(token: string) {
+    return this.http
+      .post<AuthSession>(`${this.baseUrl}/session/new`, {
+        request_token: token,
+      })
+      .pipe(
+        tap(({ success, session_id }) => {
+          if (success) {
+            localStorage.setItem('session_id', session_id);
+          }
         })
-        .pipe(
-          tap(({ success, session_id }) => {
-            if (success) {
-              this.sessionId = session_id;
-              localStorage.setItem('session_id', session_id);
-            }
-          })
-        );
-    } else {
-      return this.createRequestToken();
-    }
+      );
   }
 
-  getUserDetails() {
-    const token = localStorage.getItem('request_token');
-    const sessionId = localStorage.getItem('session_id');
+  getUserDetails(sessionId: string) {
+    return this.http.get<User>(`${this.API_ENDPOINT}/account`, {
+      params: {
+        session_id: sessionId,
+      },
+    });
+  }
 
-    if (token) {
-      if (sessionId) {
-        return this.http.get<User>(`${this.API_ENDPOINT}/account`, {
-          params: {
-            session_id: sessionId,
-          },
-        });
-      } else {
-        return this.createSessionId();
-      }
-    }
-
-    return this.createRequestToken();
+  deleteSession(sessionId: string) {
+    return this.http.delete<{ success: boolean }>(`${this.baseUrl}/session`, {
+      body: {
+        session_id: sessionId,
+      },
+    });
   }
 
   logOut() {
-    this.user = undefined;
-    this.sessionId = undefined;
     localStorage.clear();
   }
 }
