@@ -196,13 +196,13 @@ export const TV = {
   },
 };
 
-export const genres_loading = {
+export const GenresLoading = {
   render: (args: SidebarComponent) => ({
     props: args,
   }),
   args: {
     darkMode: false,
     currentMedia: 'tv',
-    genres: undefined,
+    genres: [],
   },
 };

@@ -7,21 +7,14 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import {
-  AuthToken,
-  BaseEntity,
-  SearchResults,
-  User,
-} from '@ng-filmpire/api-interfaces';
-import { AuthService, SearchHttpService } from '@ng-filmpire/core-data';
+import { Router } from '@angular/router';
+import { BaseEntity, SearchResults, User } from '@ng-filmpire/api-interfaces';
+import { SearchHttpService } from '@ng-filmpire/core-data';
 import {
   Observable,
-  concatMap,
   debounceTime,
   distinctUntilChanged,
   filter,
-  forkJoin,
   map,
   switchMap,
 } from 'rxjs';
@@ -34,36 +27,23 @@ import {
 })
 export class NavbarComponent implements OnInit {
   @Input() darkMode!: boolean;
+  @Input() user!: User | null;
 
   @Output() toggleDarkMode = new EventEmitter<void>();
   @Output() toggleMobileSidenav = new EventEmitter<void>();
+  @Output() logIn = new EventEmitter<void>();
 
   searchForm!: FormGroup;
   searchValueChanges$!: Observable<BaseEntity<SearchResults>> | undefined;
-  authToken$!: Observable<AuthToken>;
-  userDetails$!: Observable<User>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute,
-    private searchHttp: SearchHttpService,
-    public authService: AuthService
+    private searchHttp: SearchHttpService
   ) {}
 
   ngOnInit(): void {
     this.buildSearchForm();
-
-    this.userDetails$ = this.route.queryParams.pipe(
-      filter(({ approved }) => approved === 'true'),
-      concatMap(() =>
-        forkJoin([
-          this.authService.createSessionId(),
-          this.authService.getUserDetails(),
-        ])
-      ),
-      map(([, { ...user }]) => (this.authService.user = user as User))
-    );
   }
 
   buildSearchForm() {
@@ -74,19 +54,14 @@ export class NavbarComponent implements OnInit {
     this.searchValueChanges$ = this.searchForm.get('search')?.valueChanges.pipe(
       debounceTime(300),
       map((query: string) => query.trim()),
+      filter((query: string) => !!query),
       distinctUntilChanged(),
-      filter((query: string) => query !== null),
       switchMap((query: string) => this.searchHttp.getMultiSearchResults(query))
     );
   }
 
-  searchMovie() {
-    this.searchForm.get('search')?.value;
-    this.searchForm.reset();
-  }
-
   authenticateUser() {
-    this.authToken$ = this.authService.createRequestToken();
+    this.logIn.emit();
   }
 
   resetSearchBar() {

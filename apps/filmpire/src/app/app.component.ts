@@ -1,9 +1,12 @@
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { Component, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SelectedMedia } from '@ng-filmpire/api-interfaces';
-import { GenreHttpService } from '@ng-filmpire/core-data';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { authAction } from './+state/auth/auth.actions';
+import { globalAction } from './+state/global/global.actions';
+import { GlobalPage } from './+state/global/models/global.model';
+import { selectGlobalPage } from './+state/global/views/global-view.selectors';
 
 @Component({
   selector: 'ng-filmpire-root',
@@ -11,24 +14,19 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   @ViewChild('snav') mobileSidenav!: MatSidenav;
 
-  darkMode = false;
-  currentMedia: SelectedMedia = 'movie';
-  activeGenreOrCategory: string | number = 'popular';
-  mediaGenres$ = this.genreHttp.getMovieGenres();
-  mediaQuery$: Observable<BreakpointState> = this.breakpointObserver.observe([
-    '(max-width: 640px)',
-  ]);
+  globalPage$!: Observable<GlobalPage>;
 
-  constructor(
-    private genreHttp: GenreHttpService,
-    private breakpointObserver: BreakpointObserver
-  ) {}
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
+    this.globalPage$ = this.store.select(selectGlobalPage);
+  }
 
   toggleDarkMode() {
-    this.darkMode = !this.darkMode;
+    this.store.dispatch(globalAction.toggleDarkMode());
   }
 
   toggleMobileSidenav() {
@@ -36,12 +34,10 @@ export class AppComponent {
   }
 
   setGenres(media: SelectedMedia) {
-    if (media === 'movie') {
-      this.mediaGenres$ = this.genreHttp.getMovieGenres();
-    } else {
-      this.mediaGenres$ = this.genreHttp.getTVGenres();
-    }
+    this.store.dispatch(globalAction.setCurrentMedia({ currentMedia: media }));
+  }
 
-    this.currentMedia = media;
+  logIn() {
+    this.store.dispatch(authAction.login());
   }
 }

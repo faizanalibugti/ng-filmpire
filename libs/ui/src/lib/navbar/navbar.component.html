@@ -1,7 +1,4 @@
-<ng-container *ngIf="authToken$ | async"></ng-container>
-<ng-container *ngIf="userDetails$ | async"></ng-container>
-
-<p class="fixed z-10 min-h-[64px] w-[calc(100vw-240px)] max-sm:w-screen">
+<nav class="fixed z-10 min-h-[64px] w-[calc(100vw-240px)] max-sm:w-screen">
   <mat-toolbar
     class="w-auto place-content-center bg-[#1976d2] text-white dark:bg-[#272727]"
   >
@@ -68,9 +65,9 @@
         </mat-form-field>
       </form>
 
-      <ng-container *ngIf="authService.user; else logIn">
+      <ng-container *ngIf="user; else logIn">
         <button
-          routerLink="/profile/{{ authService.user.id }}"
+          routerLink="/profile/{{ user.id }}"
           mat-button
           class="icon"
           aria-label="account icon"
@@ -120,4 +117,4 @@
       </form>
     </mat-toolbar-row>
   </mat-toolbar>
-</p>
+</nav>

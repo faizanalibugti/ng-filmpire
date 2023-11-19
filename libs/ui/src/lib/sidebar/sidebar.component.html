@@ -23,7 +23,7 @@
 
 <mat-divider></mat-divider>
 
-<ng-container *ngIf="genres; else loading">
+<ng-container *ngIf="genres.length > 0; else loading">
   <mat-nav-list class="h-[calc(100vh-230px)] overflow-y-auto overflow-x-hidden">
     <div mat-subheader>
       {{ currentMedia === 'movie' ? 'Movie' : 'TV' }} Categories
@@ -65,7 +65,7 @@
             height="24"
             width="24"
         /></span>
-        <div matListItemTitle>{{ genre.name | titlecase }}</div>
+        <div matListItemTitle>{{ genre.name }}</div>
       </a>
     </ng-container>
   </mat-nav-list>
