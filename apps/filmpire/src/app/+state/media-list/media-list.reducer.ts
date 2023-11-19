@@ -31,6 +31,7 @@ const reducer = createReducer(
   on(
     MediaListActions.mediaListAction.loadMovieList,
     MediaListActions.mediaListAction.loadTVList,
+    MediaListActions.mediaListAction.changePage,
     (state): MediaListState => ({
       ...state,
       loaded: false,

@@ -6,16 +6,12 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
-import {
-  BaseEntity,
-  Movie,
-  SelectedMedia,
-  TvShow,
-} from '@ng-filmpire/api-interfaces';
-import { MovieHttpService, TvHttpService } from '@ng-filmpire/core-data';
+import { Movie, TvShow } from '@ng-filmpire/api-interfaces';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { mediaListAction } from '../+state/media-list/media-list.actions';
+import { MediaListPage } from '../+state/media-list/models/media-list.model';
+import { selectMediaListPage } from '../+state/media-list/views/media-list-view.selectors';
 
 @Component({
   selector: 'ng-filmpire-media-list',
@@ -26,50 +22,18 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 export class MediaListComponent implements OnInit {
   @ViewChild('topOfPage') topOfPage!: ElementRef<HTMLDivElement>;
 
-  mediaList$!: Observable<BaseEntity<TvShow | Movie>>;
+  mediaList$!: Observable<MediaListPage>;
 
-  currentGenreOrCategory!: number | string;
-  currentSelectedMedia!: SelectedMedia;
-
-  constructor(
-    private movieHttp: MovieHttpService,
-    private tvHttp: TvHttpService,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.mediaList$ = this.route.params.pipe(
-      filter(({ media, id }) => !!media && !!id),
-      map(({ media, id }) => ({
-        id: Number(id) ? Number(id) : String(id),
-        media,
-      })),
-      tap(({ media, id }) => {
-        this.currentSelectedMedia = media;
-        this.currentGenreOrCategory = id;
-      }),
-      switchMap(({ id, media }) =>
-        (media as SelectedMedia) === 'tv'
-          ? this.tvHttp.getTVShows(id)
-          : this.movieHttp.getMovies(id)
-      ),
-      tap(() => {
-        this.scrollToTop();
-      })
-    );
+    this.mediaList$ = this.store.select(selectMediaListPage);
   }
 
   goToPage(page: PageEvent) {
-    this.mediaList$ =
-      this.currentSelectedMedia === 'tv'
-        ? this.tvHttp.getTVShows(
-            this.currentGenreOrCategory,
-            page.pageIndex + 1
-          )
-        : this.movieHttp.getMovies(
-            this.currentGenreOrCategory,
-            page.pageIndex + 1
-          );
+    this.store.dispatch(
+      mediaListAction.changePage({ page: page.pageIndex + 1 })
+    );
 
     this.scrollToTop();
   }
