@@ -1,22 +1,13 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import {
-  AccountStates,
-  MovieDetail,
-  SelectedMedia,
-  TvShowDetail,
-  Video,
-} from '@ng-filmpire/api-interfaces';
-import {
-  AccountService,
-  MovieHttpService,
-  TvHttpService,
-} from '@ng-filmpire/core-data';
+import { MovieDetail, TvShowDetail, Video } from '@ng-filmpire/api-interfaces';
 import { MediaVideosDialogComponent } from '@ng-filmpire/ui';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { mediaInfoAction } from '../+state/media-info/media-info.actions';
+import { MediaInfoPage } from '../+state/media-info/models/media-info.model';
+import { selectMediaInfoPage } from '../+state/media-info/views/media-info-view.selectors';
 
 @Component({
   selector: 'ng-filmpire-media-info',
@@ -26,58 +17,18 @@ import { filter, map, switchMap, tap } from 'rxjs/operators';
 export class MediaInfoComponent implements OnInit {
   @ViewChild('topOfPage') topOfPage!: ElementRef;
 
-  currentSelectedMedia!: SelectedMedia;
-  mediaDetails$!: Observable<TvShowDetail | MovieDetail>;
-  accountState!: AccountStates;
+  mediaInfoPage!: Observable<MediaInfoPage>;
 
   languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
 
-  accountId!: number | undefined;
-
   constructor(
-    private movieHttp: MovieHttpService,
-    private tvHttp: TvHttpService,
-    private accountHttp: AccountService,
-    private route: ActivatedRoute,
+    private store: Store,
     private dialog: MatDialog,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    this.accountId = this.accountHttp.accountId;
-
-    const firstUrlSegment = this.route.snapshot.url[0];
-
-    if (firstUrlSegment) {
-      this.currentSelectedMedia = firstUrlSegment.path as SelectedMedia;
-    }
-
-    this.mediaDetails$ = this.route.params.pipe(
-      filter(({ id }) => !!id),
-      map(({ id }) => Number(id)),
-      switchMap((id: number) =>
-        this.currentSelectedMedia === 'tv'
-          ? this.tvHttp.getTVShowDetails(id)
-          : this.movieHttp.getMovieDetails(id)
-      ),
-      tap(() => {
-        this.scrollToTop();
-      })
-    );
-
-    if (this.accountId) {
-      this.route.params
-        .pipe(
-          filter(({ id }) => !!id),
-          map(({ id }) => Number(id)),
-          switchMap((id: number) =>
-            this.currentSelectedMedia === 'tv'
-              ? this.tvHttp.getTVAccountState(id)
-              : this.movieHttp.getMovieAccountState(id)
-          )
-        )
-        .subscribe((data) => (this.accountState = data));
-    }
+    this.mediaInfoPage = this.store.select(selectMediaInfoPage);
   }
 
   openVideosDialog(videos: Video[]) {
@@ -88,22 +39,12 @@ export class MediaInfoComponent implements OnInit {
     });
   }
 
-  addToFavorite(mediaId: number, media: SelectedMedia, favorite: boolean) {
-    this.accountHttp.addToFavourite(mediaId, media, favorite).subscribe(() => {
-      this.accountState = {
-        ...this.accountState,
-        favorite,
-      };
-    });
+  addToFavorite(mediaId: number, favorite: boolean) {
+    this.store.dispatch(mediaInfoAction.addToFavorite({ mediaId, favorite }));
   }
 
-  addToWatchlist(mediaId: number, media: SelectedMedia, watchlist: boolean) {
-    this.accountHttp.addToWatchList(mediaId, media, watchlist).subscribe(() => {
-      this.accountState = {
-        ...this.accountState,
-        watchlist,
-      };
-    });
+  addToWatchlist(mediaId: number, watchlist: boolean) {
+    this.store.dispatch(mediaInfoAction.addToWatchlist({ mediaId, watchlist }));
   }
 
   scrollToTop() {
