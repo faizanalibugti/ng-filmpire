@@ -24,20 +24,13 @@ export class AccountService {
     return `${this.API_ENDPOINT}/${this.model}`;
   }
 
-  accountId = this.auth.user?.id;
-  sessionId = this.auth.sessionId as string;
-
   /**
    *
    * @param http {HttpClient}
    */
   constructor(private http: HttpClient, private auth: AuthService) {}
 
-  getFavoriteMovies(
-    accountId: number,
-    session_id: string = this.sessionId,
-    page = 1
-  ) {
+  getFavoriteMovies(accountId: number, session_id: string, page = 1) {
     return this.http.get<BaseEntity<Movie>>(
       `${this.baseUrl}/${accountId}/favorite/movies`,
       {
@@ -46,11 +39,7 @@ export class AccountService {
     );
   }
 
-  getFavouriteTV(
-    accountId: number,
-    session_id: string = this.sessionId,
-    page = 1
-  ) {
+  getFavouriteTV(accountId: number, session_id: string, page = 1) {
     return this.http.get<BaseEntity<TvShow>>(
       `${this.baseUrl}/${accountId}/favorite/tv`,
       {
@@ -59,11 +48,7 @@ export class AccountService {
     );
   }
 
-  getWatchListMovies(
-    accountId: number,
-    session_id: string = this.sessionId,
-    page = 1
-  ) {
+  getWatchListMovies(accountId: number, session_id: string, page = 1) {
     return this.http.get<BaseEntity<Movie>>(
       `${this.baseUrl}/${accountId}/watchlist/movies`,
       {
@@ -72,11 +57,7 @@ export class AccountService {
     );
   }
 
-  getWatchListTV(
-    accountId: number,
-    session_id: string = this.sessionId,
-    page = 1
-  ) {
+  getWatchListTV(accountId: number, session_id: string, page = 1) {
     return this.http.get<BaseEntity<TvShow>>(
       `${this.baseUrl}/${accountId}/watchlist/tv`,
       {
@@ -89,10 +70,11 @@ export class AccountService {
     media_id: number,
     media_type: SelectedMedia,
     favorite: boolean,
-    session_id: string = this.sessionId
+    session_id: string,
+    accountId: string
   ) {
     return this.http.post(
-      `${this.baseUrl}/${this.accountId}/favorite`,
+      `${this.baseUrl}/${accountId}/favorite`,
       {
         media_id,
         media_type,
@@ -108,10 +90,11 @@ export class AccountService {
     media_id: number,
     media_type: SelectedMedia,
     watchlist: boolean,
-    session_id: string = this.sessionId
+    session_id: string,
+    accountId: string
   ) {
     return this.http.post(
-      `${this.baseUrl}/${this.accountId}/watchlist`,
+      `${this.baseUrl}/${accountId}/watchlist`,
       {
         media_id,
         media_type,

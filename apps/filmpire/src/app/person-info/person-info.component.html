@@ -1,104 +1,138 @@
-<ng-container *ngIf="actorDetails$ | async as actor; else loading">
-  <div class="flex justify-between p-4 max-sm:block">
-    <div class="mt-4 basis-1/6">
-      <img
-        class="rounded-lg shadow-md shadow-gray-600 max-sm:mx-auto max-sm:w-1/2"
-        [src]="
-          actor.profile_path
-            ? 'https://image.tmdb.org/t/p/h632' + actor.profile_path
-            : 'assets/actor_avatar_placeholder.jpg'
-        "
-        width="421"
-        height="632"
-        alt="{{ actor.name }}"
-      />
-    </div>
-    <div class="basis-4/5">
-      <h2 class="mt-4 text-2xl font-semibold">{{ actor.name }}</h2>
-      <p class="mt-1 text-gray-600 dark:text-white" *ngIf="actor.birthday">
-        {{ actor.birthday | date: 'longDate' }} ({{ actor?.age }} years old)
-      </p>
-      <p class="mt-1 text-gray-600">
-        Place of Birth: {{ actor.place_of_birth || 'N/A' }}
-      </p>
-      <h3 class="text-md mt-3 font-semibold">Biography</h3>
-      <p
-        class="mt-1 text-gray-700 dark:text-white"
-        *ngIf="actor.biography; else noBiography"
-      >
-        {{ actor.biography }}
-      </p>
-      <div class="mt-4 flex justify-between">
-        <a
-          *ngIf="actor.imdb_id"
-          class="bg-[#1976d2] dark:bg-[#dc1a28]"
-          href="https://www.imdb.com/name/{{ actor.imdb_id }}"
-          mat-fab
-          extended
-          target="_blank"
+<ng-container *ngIf="actorDetailsPage$ | async as personInfoPage">
+  <ng-container *ngIf="personInfoPage.loaded; else loading">
+    <div class="flex justify-between p-4 max-sm:block">
+      <div class="mt-4 basis-1/6">
+        <img
+          class="rounded-lg shadow-md shadow-gray-600 max-sm:mx-auto max-sm:w-1/2"
+          [src]="
+            personInfoPage.personDetails.profile_path
+              ? 'https://image.tmdb.org/t/p/h632' +
+                personInfoPage.personDetails.profile_path
+              : 'assets/actor_avatar_placeholder.jpg'
+          "
+          width="421"
+          height="632"
+          alt="{{ personInfoPage.personDetails.name }}"
+        />
+      </div>
+      <div class="basis-4/5">
+        <h2 class="mt-4 text-2xl font-semibold">
+          {{ personInfoPage.personDetails.name }}
+        </h2>
+        <p
+          class="mt-1 text-gray-600 dark:text-white"
+          *ngIf="personInfoPage.personDetails.birthday"
         >
-          <i class="fab fa-imdb"></i>
-          IMDb
-        </a>
+          {{ personInfoPage.personDetails.birthday | date : 'longDate' }} ({{
+            personInfoPage.personDetails.age
+          }}
+          years old)
+        </p>
+        <p class="mt-1 text-gray-600">
+          Place of Birth:
+          {{ personInfoPage.personDetails.place_of_birth || 'N/A' }}
+        </p>
+        <h3 class="text-md mt-3 font-semibold">Biography</h3>
+        <p
+          class="mt-1 text-gray-700 dark:text-white"
+          *ngIf="personInfoPage.personDetails.biography; else noBiography"
+        >
+          {{ personInfoPage.personDetails.biography }}
+        </p>
+        <div class="mt-4 flex justify-between">
+          <a
+            *ngIf="personInfoPage.personDetails.imdb_id"
+            class="bg-[#1976d2] dark:bg-[#dc1a28]"
+            href="https://www.imdb.com/name/{{
+              personInfoPage.personDetails.imdb_id
+            }}"
+            mat-fab
+            extended
+            target="_blank"
+          >
+            <i class="fab fa-imdb"></i>
+            IMDb
+          </a>
 
-        <button
-          class="bg-[#1976d2] dark:bg-[#dc1a28]"
-          mat-fab
-          extended
-          (click)="navigateToPreviousPage()"
-        >
-          <mat-icon>arrow_back</mat-icon>
-          Back
-        </button>
+          <button
+            class="bg-[#1976d2] dark:bg-[#dc1a28]"
+            mat-fab
+            extended
+            (click)="navigateToPreviousPage()"
+          >
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="p-4">
-    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
-      <h2 class="mb-10 text-3xl font-semibold dark:text-white">Filmography</h2>
+    <div class="p-4">
+      <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+        <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+          Filmography
+        </h2>
+      </div>
+
+      <mat-tab-group>
+        <mat-tab label="Movies">
+          <ng-container
+            *ngIf="
+              personInfoPage.personDetails.movie_credits.cast.length > 0;
+              else noMedia
+            "
+          >
+            <cdk-virtual-scroll-viewport
+              itemSize="200"
+              minBufferPx="1200"
+              maxBufferPx="1200"
+              class="h-[500px] overflow-x-hidden"
+            >
+              <ng-container
+                *cdkVirtualFor="
+                  let media of $any(
+                    personInfoPage.personDetails.movie_credits.cast
+                  )
+                "
+              >
+                <ng-filmpire-media-card-item
+                  [media]="media"
+                ></ng-filmpire-media-card-item>
+              </ng-container>
+            </cdk-virtual-scroll-viewport>
+          </ng-container>
+        </mat-tab>
+
+        <mat-tab label="TV Shows">
+          <ng-container
+            *ngIf="
+              personInfoPage.personDetails.tv_credits.cast.length > 0;
+              else noMedia
+            "
+          >
+            <cdk-virtual-scroll-viewport
+              itemSize="200"
+              minBufferPx="1200"
+              maxBufferPx="1200"
+              class="h-[500px] overflow-x-hidden"
+            >
+              <ng-container
+                *cdkVirtualFor="
+                  let media of $any(
+                    personInfoPage.personDetails.tv_credits.cast
+                  )
+                "
+              >
+                <ng-filmpire-media-card-item
+                  [media]="media"
+                ></ng-filmpire-media-card-item>
+              </ng-container>
+            </cdk-virtual-scroll-viewport>
+          </ng-container>
+        </mat-tab>
+      </mat-tab-group>
     </div>
-
-    <mat-tab-group>
-      <mat-tab label="Movies">
-        <ng-container *ngIf="actor.movie_credits.cast.length > 0; else noMedia">
-          <cdk-virtual-scroll-viewport
-            itemSize="200"
-            minBufferPx="1200"
-            maxBufferPx="1200"
-            class="h-[500px] overflow-x-hidden"
-          >
-            <ng-container
-              *cdkVirtualFor="let media of $any(actor.movie_credits.cast)"
-            >
-              <ng-filmpire-media-card-item
-                [media]="media"
-              ></ng-filmpire-media-card-item>
-            </ng-container>
-          </cdk-virtual-scroll-viewport>
-        </ng-container>
-      </mat-tab>
-
-      <mat-tab label="TV Shows">
-        <ng-container *ngIf="actor.tv_credits.cast.length > 0; else noMedia">
-          <cdk-virtual-scroll-viewport
-            itemSize="200"
-            minBufferPx="1200"
-            maxBufferPx="1200"
-            class="h-[500px] overflow-x-hidden"
-          >
-            <ng-container
-              *cdkVirtualFor="let media of $any(actor.tv_credits.cast)"
-            >
-              <ng-filmpire-media-card-item
-                [media]="media"
-              ></ng-filmpire-media-card-item>
-            </ng-container>
-          </cdk-virtual-scroll-viewport>
-        </ng-container>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
+  </ng-container>
 </ng-container>
 
 <ng-template #noBiography>

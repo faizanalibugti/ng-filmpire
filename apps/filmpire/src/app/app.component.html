@@ -1,32 +1,36 @@
-<div ngFilmpireTheme [darkTheme]="darkMode">
-  <mat-sidenav-container
-    class="absolute bottom-0 left-0 right-0 top-0 flex h-screen flex-col"
-  >
-    <mat-sidenav
-      #snav
-      [mode]="(mediaQuery$ | async)?.matches ? 'over' : 'side'"
-      [position]="(mediaQuery$ | async)?.matches ? 'end' : 'start'"
-      [opened]="(mediaQuery$ | async)?.matches ? false : true"
-      class="w-[240px] overflow-y-hidden dark:bg-[#121212]"
+<ng-container *ngIf="globalPage$ | async as global">
+  <div ngFilmpireTheme [darkTheme]="global.darkMode">
+    <mat-sidenav-container
+      class="absolute bottom-0 left-0 right-0 top-0 flex h-screen flex-col"
     >
-      <ng-filmpire-sidebar
-        [darkMode]="darkMode"
-        [currentMedia]="currentMedia"
-        [genres]="(mediaGenres$ | async)?.genres"
-        (mediaSelected)="setGenres($event)"
-      ></ng-filmpire-sidebar>
-    </mat-sidenav>
+      <mat-sidenav
+        #snav
+        [mode]="global.isMobile ? 'over' : 'side'"
+        [position]="global.isMobile ? 'end' : 'start'"
+        [opened]="global.isMobile ? false : true"
+        class="w-[240px] overflow-y-hidden dark:bg-[#121212]"
+      >
+        <ng-filmpire-sidebar
+          [darkMode]="global.darkMode"
+          [currentMedia]="global.currentMedia"
+          [genres]="global.genres"
+          (mediaSelected)="setGenres($event)"
+        ></ng-filmpire-sidebar>
+      </mat-sidenav>
 
-    <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">
-      <ng-filmpire-navbar
-        [darkMode]="darkMode"
-        (toggleDarkMode)="toggleDarkMode()"
-        (toggleMobileSidenav)="toggleMobileSidenav()"
-      ></ng-filmpire-navbar>
+      <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">
+        <ng-filmpire-navbar
+          [darkMode]="global.darkMode"
+          [user]="global.user"
+          (toggleDarkMode)="toggleDarkMode()"
+          (toggleMobileSidenav)="toggleMobileSidenav()"
+          (logIn)="logIn()"
+        ></ng-filmpire-navbar>
 
-      <main class="mt-16 p-2 max-sm:mt-36">
-        <router-outlet></router-outlet>
-      </main>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+        <main class="mt-16 p-2 max-sm:mt-36">
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+</ng-container>

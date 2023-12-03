@@ -1,5 +1,5 @@
-<ng-container *ngIf="mediaDetails$ | async as mediaDetail; else loading">
-  <div #topOfPage class="scroll-mt-40">
+<ng-container *ngIf="mediaInfoPage | async as media">
+  <div *ngIf="media.loaded; else loading" #topOfPage class="scroll-mt-40">
     <div class="container px-4 py-8">
       <div class="flex justify-evenly max-sm:block">
         <div
@@ -7,14 +7,13 @@
         >
           <img
             [src]="
-              mediaDetail.poster_path
-                ? 'https://image.tmdb.org/t/p/w300' + mediaDetail.poster_path
+              media.mediaInfo.poster_path
+                ? 'https://image.tmdb.org/t/p/w300' +
+                  media.mediaInfo.poster_path
                 : 'assets/media-poster-placeholder.png'
             "
             alt="{{
-              currentSelectedMedia === 'movie'
-                ? 'Movie Poster'
-                : 'TV Show Poster'
+              media.currentMedia === 'movie' ? 'Movie Poster' : 'TV Show Poster'
             }}"
             width="300"
             height="450"
@@ -24,101 +23,105 @@
         <div class="w-2/3 pl-8 max-sm:w-full max-sm:pl-0">
           <h1 class="text-center text-4xl font-semibold">
             <ng-container
-              *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+              *ngIf="media.currentMedia === 'movie' && isMovie(media.mediaInfo)"
             >
-              {{ mediaDetail.title }}
+              {{ media.mediaInfo.title }}
             </ng-container>
             <ng-container
-              *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+              *ngIf="media.currentMedia === 'tv' && isTV(media.mediaInfo)"
             >
-              {{ mediaDetail.name }}
+              {{ media.mediaInfo.name }}
             </ng-container>
             (
             <ng-container
-              *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+              *ngIf="media.currentMedia === 'movie' && isMovie(media.mediaInfo)"
             >
-              {{ mediaDetail.release_date | date: 'yyyy' }}
+              {{ media.mediaInfo.release_date | date : 'yyyy' }}
             </ng-container>
             <ng-container
-              *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+              *ngIf="media.currentMedia === 'tv' && isTV(media.mediaInfo)"
             >
-              {{ mediaDetail.first_air_date | date: 'yyyy' }} -
+              {{ media.mediaInfo.first_air_date | date : 'yyyy' }} -
             </ng-container>
 
             <ng-container
               *ngIf="
-                currentSelectedMedia === 'tv' &&
-                isTV(mediaDetail) &&
-                mediaDetail.status === 'Ended'
+                media.currentMedia === 'tv' &&
+                isTV(media.mediaInfo) &&
+                media.mediaInfo.status === 'Ended'
               "
             >
-              {{ mediaDetail.last_air_date | date: 'yyyy' }}
+              {{ media.mediaInfo.last_air_date | date : 'yyyy' }}
             </ng-container>
             )
           </h1>
 
           <h2
             class="mt-4 text-center text-2xl italic"
-            *ngIf="mediaDetail.tagline"
+            *ngIf="media.mediaInfo.tagline"
           >
-            "{{ mediaDetail.tagline }}"
+            "{{ media.mediaInfo.tagline }}"
           </h2>
 
           <div class="flex items-baseline justify-between gap-6">
             <div class="mt-4 flex items-center">
               <span class="mr-1 text-xl text-yellow-500">&#9733;</span>
               <span class="text-xl text-gray-600 dark:text-white">{{
-                mediaDetail.vote_average | number: '1.1-1'
+                media.mediaInfo.vote_average | number : '1.1-1'
               }}</span>
               <span class="text-xl text-gray-600"> /10 </span>
-              <sub *ngIf="mediaDetail.vote_count" class="ml-1 text-gray-600"
-                >({{ mediaDetail.vote_count | abbreviateNumber }})</sub
+              <sub *ngIf="media.mediaInfo.vote_count" class="ml-1 text-gray-600"
+                >({{ media.mediaInfo.vote_count | abbreviateNumber }})</sub
               >
             </div>
 
             <div class="font-serif text-xl font-medium text-gray-600">
               <ng-container
-                *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+                *ngIf="
+                  media.currentMedia === 'movie' && isMovie(media.mediaInfo)
+                "
               >
-                {{ mediaDetail.runtime }} min ●
+                {{ media.mediaInfo.runtime }} min ●
               </ng-container>
 
               <ng-container
-                *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+                *ngIf="media.currentMedia === 'tv' && isTV(media.mediaInfo)"
               >
                 TV Series ●
               </ng-container>
 
               <ng-container
                 *ngIf="
-                  currentSelectedMedia === 'tv' &&
-                  isTV(mediaDetail) &&
-                  mediaDetail.episode_run_time.length > 0
+                  media.currentMedia === 'tv' &&
+                  isTV(media.mediaInfo) &&
+                  media.mediaInfo.episode_run_time.length > 0
                 "
               >
-                {{ mediaDetail.episode_run_time | slice: 0 - 1 }} min ●
+                {{ media.mediaInfo.episode_run_time | slice : 0 - 1 }} min ●
               </ng-container>
 
               <ng-container
-                *ngIf="currentSelectedMedia === 'movie' && isMovie(mediaDetail)"
+                *ngIf="
+                  media.currentMedia === 'movie' && isMovie(media.mediaInfo)
+                "
               >
-                {{ mediaDetail.release_date | date: 'mediumDate' }} ●
+                {{ media.mediaInfo.release_date | date : 'mediumDate' }} ●
               </ng-container>
               <ng-container
-                *ngIf="currentSelectedMedia === 'tv' && isTV(mediaDetail)"
+                *ngIf="media.currentMedia === 'tv' && isTV(media.mediaInfo)"
               >
-                {{ mediaDetail.first_air_date | date: 'mediumDate' }} ●
+                {{ media.mediaInfo.first_air_date | date : 'mediumDate' }} ●
               </ng-container>
 
-              {{ languageNames.of(mediaDetail.original_language) }}
+              {{ languageNames.of(media.mediaInfo.original_language) }}
             </div>
           </div>
 
           <div class="mt-6 flex flex-wrap items-baseline justify-center gap-4">
-            <ng-container *ngFor="let genre of mediaDetail.genres">
+            <ng-container *ngFor="let genre of media.mediaInfo.genres">
               <a
                 class="flex items-center justify-center hover:scale-110"
-                [routerLink]="['/genre', currentSelectedMedia, genre.id]"
+                [routerLink]="['/genre', media.currentMedia, genre.id]"
               >
                 <img
                   class="mr-2 dark:invert"
@@ -137,19 +140,21 @@
           <div class="mt-6">
             <h2 class="text-2xl font-semibold">Overview</h2>
             <p
-              *ngIf="mediaDetail.overview; else noOverview"
+              *ngIf="media.mediaInfo.overview; else noOverview"
               class="mt-2 font-normal text-gray-700 dark:text-white"
             >
-              {{ mediaDetail.overview }}
+              {{ media.mediaInfo.overview }}
             </p>
           </div>
           <div class="mt-6">
             <h2 class="text-2xl font-semibold">Top Cast</h2>
             <div class="mt-2 flex gap-1 overflow-x-auto">
               <ng-container
-                *ngIf="mediaDetail.credits.cast.length > 0; else noCast"
+                *ngIf="media.mediaInfo.credits.cast.length > 0; else noCast"
               >
-                <ng-container *ngFor="let actor of mediaDetail.credits.cast">
+                <ng-container
+                  *ngFor="let actor of media.mediaInfo.credits.cast"
+                >
                   <a
                     class="min-w-[25%] cursor-pointer max-sm:min-w-[40%]"
                     [routerLink]="['/actor', actor.id]"
@@ -177,9 +182,9 @@
 
           <div class="mt-6 flex justify-between gap-3 max-md:flex-col">
             <a
-              *ngIf="mediaDetail.homepage && !accountId"
+              *ngIf="media.mediaInfo.homepage"
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
-              [href]="mediaDetail.homepage"
+              [href]="media.mediaInfo.homepage"
               matTooltip="Visit Official Website"
               mat-fab
               extended
@@ -190,9 +195,9 @@
             </a>
 
             <a
-              *ngIf="mediaDetail.imdb_id"
+              *ngIf="media.mediaInfo.imdb_id"
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
-              href="https://www.imdb.com/title/{{ mediaDetail.imdb_id }}"
+              href="https://www.imdb.com/title/{{ media.mediaInfo.imdb_id }}"
               matTooltip="Visit imDB page"
               mat-fab
               extended
@@ -204,64 +209,48 @@
 
             <button
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
-              *ngIf="mediaDetail.videos.results.length > 0"
+              *ngIf="media.mediaInfo.videos.results.length > 0"
               matTooltip="Watch trailers"
               mat-fab
               extended
-              (click)="openVideosDialog(mediaDetail.videos.results)"
+              (click)="openVideosDialog(media.mediaInfo.videos.results)"
             >
               <mat-icon>movie</mat-icon>
               Videos
             </button>
 
-            <ng-container *ngIf="accountId">
-              <ng-container *ngIf="accountState as account">
-                <button
-                  class="bg-[#1976d2] dark:bg-[#dc1a28]"
-                  mat-fab
-                  extended
-                  [matTooltip]="
-                    account.favorite
-                      ? 'Remove from Favorites'
-                      : 'Add to Favorites'
-                  "
-                  (click)="
-                    addToFavorite(
-                      mediaDetail.id,
-                      currentSelectedMedia,
-                      !account.favorite
-                    )
-                  "
-                >
-                  <mat-icon>{{
-                    account.favorite ? 'favorite' : 'favorite_border'
-                  }}</mat-icon>
-                  {{ account.favorite ? 'Unfavorite' : 'Favorite' }}
-                </button>
+            <ng-container *ngIf="media.accountState as account">
+              <button
+                class="bg-[#1976d2] dark:bg-[#dc1a28]"
+                mat-fab
+                extended
+                [matTooltip]="
+                  account.favorite
+                    ? 'Remove from Favorites'
+                    : 'Add to Favorites'
+                "
+                (click)="addToFavorite(media.mediaInfo.id, !account.favorite)"
+              >
+                <mat-icon>{{
+                  account.favorite ? 'favorite' : 'favorite_border'
+                }}</mat-icon>
+                {{ account.favorite ? 'Unfavorite' : 'Favorite' }}
+              </button>
 
-                <button
-                  class="bg-[#1976d2] dark:bg-[#dc1a28]"
-                  mat-fab
-                  [matTooltip]="
-                    account.watchlist
-                      ? 'Remove from Watchlist'
-                      : 'Add to Watchlist'
-                  "
-                  extended
-                  (click)="
-                    addToWatchlist(
-                      mediaDetail.id,
-                      currentSelectedMedia,
-                      !account.watchlist
-                    )
-                  "
-                >
-                  <mat-icon>{{
-                    account.watchlist ? 'remove' : 'add'
-                  }}</mat-icon>
-                  Watchlist
-                </button>
-              </ng-container>
+              <button
+                class="bg-[#1976d2] dark:bg-[#dc1a28]"
+                mat-fab
+                [matTooltip]="
+                  account.watchlist
+                    ? 'Remove from Watchlist'
+                    : 'Add to Watchlist'
+                "
+                extended
+                (click)="addToWatchlist(media.mediaInfo.id, !account.watchlist)"
+              >
+                <mat-icon>{{ account.watchlist ? 'remove' : 'add' }}</mat-icon>
+                Watchlist
+              </button>
             </ng-container>
 
             <button
@@ -278,29 +267,29 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="p-4">
-    <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
-      <h2 class="mb-10 text-3xl font-semibold dark:text-white">
-        You may also like...
-      </h2>
-    </div>
-    <div class="grid-cols-card grid gap-6">
-      <ng-container
-        *ngIf="
-          mediaDetail.recommendations.results.length > 0;
-          else noRecommendations
-        "
-      >
+    <div class="p-4">
+      <div class="h-full border-l-4 border-blue-500 pl-4 dark:border-red-700">
+        <h2 class="mb-10 text-3xl font-semibold dark:text-white">
+          You may also like...
+        </h2>
+      </div>
+      <div class="grid-cols-card grid gap-6">
         <ng-container
-          *ngFor="let media of $any(mediaDetail.recommendations.results)"
+          *ngIf="
+            media.mediaInfo.recommendations.results.length > 0;
+            else noRecommendations
+          "
         >
-          <ng-filmpire-media-card-item
-            [media]="media"
-          ></ng-filmpire-media-card-item>
+          <ng-container
+            *ngFor="let media of $any(media.mediaInfo.recommendations.results)"
+          >
+            <ng-filmpire-media-card-item
+              [media]="media"
+            ></ng-filmpire-media-card-item>
+          </ng-container>
         </ng-container>
-      </ng-container>
+      </div>
     </div>
   </div>
 </ng-container>

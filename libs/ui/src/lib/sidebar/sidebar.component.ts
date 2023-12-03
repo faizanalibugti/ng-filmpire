@@ -19,7 +19,7 @@ import { Category, Genre, SelectedMedia } from '@ng-filmpire/api-interfaces';
 export class SidebarComponent implements OnChanges {
   @Input() darkMode!: boolean;
   @Input() currentMedia!: SelectedMedia;
-  @Input() genres!: Genre[] | undefined;
+  @Input() genres!: Genre[];
 
   @Output() mediaSelected = new EventEmitter<SelectedMedia>();
 

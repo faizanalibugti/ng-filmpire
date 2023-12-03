@@ -10,6 +10,7 @@ import { Person } from '../person/person.model';
 
 export interface TvShow {
   id: number;
+  adult: boolean;
   name: string;
   original_name: string;
   poster_path: string;

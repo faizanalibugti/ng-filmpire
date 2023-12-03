@@ -1,10 +1,13 @@
 import { SafeResourceUrl } from '@angular/platform-browser';
 
-export interface BaseEntity<T> {
+export interface Pagination {
   page: number;
-  results: T[];
   total_pages: number;
   total_results: number;
+}
+
+export interface BaseEntity<T> extends Pagination {
+  results: T[];
 }
 
 export type SelectedMedia = 'movie' | 'tv';
