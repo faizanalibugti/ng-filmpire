@@ -5,6 +5,7 @@ export const globalAction = createActionGroup({
   source: 'Global',
   events: {
     'Toggle Dark Mode': emptyProps(),
+    'Set Connectivity': props<{ network: 'online' | 'offline' }>(),
     'Set Current Media': props<{ currentMedia: SelectedMedia }>(),
     'Set Genre Category': props<{ genreOrCategory: string | number }>(),
     'Set Mobile Breakpoint': props<{ isMobile: boolean }>(),

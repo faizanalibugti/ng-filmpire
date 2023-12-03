@@ -4,7 +4,16 @@ import { GenreHttpService, NotificationsService } from '@ng-filmpire/core-data';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
-import { catchError, filter, map, of, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  filter,
+  fromEvent,
+  map,
+  merge,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { selectRouteParams } from '../router/router.selectors';
 import * as GlobalActions from './global.actions';
 import {
@@ -49,6 +58,20 @@ export class GlobalEffects {
           )
         )
       );
+  });
+
+  internetConnectivity$ = createEffect(() => {
+    return merge(
+      of(navigator.onLine),
+      fromEvent(window, 'online').pipe(map(() => true)),
+      fromEvent(window, 'offline').pipe(map(() => false))
+    ).pipe(
+      map((online) =>
+        online
+          ? GlobalActions.globalAction.setConnectivity({ network: 'online' })
+          : GlobalActions.globalAction.setConnectivity({ network: 'offline' })
+      )
+    );
   });
 
   loadGenres$ = createEffect(() => {
@@ -123,6 +146,22 @@ export class GlobalEffects {
         tap(() =>
           this.notifications.openSnackBar(
             'Failed to load genres. Please try again later'
+          )
+        )
+      );
+    },
+    { dispatch: false }
+  );
+
+  showConnectivityMessage$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(GlobalActions.globalAction.setConnectivity),
+        tap(({ network }) =>
+          this.notifications.openSnackBar(
+            network === 'offline'
+              ? "You're offline. Check your connection."
+              : 'Internet connected. Please refresh the page'
           )
         )
       );
