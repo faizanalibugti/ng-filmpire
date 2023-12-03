@@ -13,22 +13,14 @@
     </ng-container>
   </div>
 
-  <ng-container *ngIf="multimedia.loaded; else loading">
-    <!-- <mat-paginator
-      [length]="multimedia.pagination!.total_results"
-      [pageSize]="multimedia.mediaList.length"
-      [pageIndex]="multimedia.pagination!.page - 1"
-      (page)="goToPage($event)"
-    >
-    </mat-paginator> -->
-  </ng-container>
+  <ng-container *ngIf="multimedia.loaded; else loading"> </ng-container>
 </ng-container>
 
 <ng-template #loading>
   <div class="flex w-full items-center justify-center">
     <mat-progress-spinner
       mode="indeterminate"
-      [diameter]="20"
+      diameter="30"
     ></mat-progress-spinner>
   </div>
 </ng-template>
