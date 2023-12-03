@@ -1,5 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { GenreHttpService, NotificationsService } from '@ng-filmpire/core-data';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
@@ -14,7 +15,10 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { selectRouteParams } from '../router/router.selectors';
+import {
+  selectRouteParams,
+  selectUrl
+} from '../router/router.selectors';
 import * as GlobalActions from './global.actions';
 import {
   selectCurrentMedia,
@@ -27,6 +31,7 @@ export class GlobalEffects {
   private actions$ = inject(Actions);
   private readonly store = inject(Store);
   private breakpointObserver = inject(BreakpointObserver);
+  private router = inject(Router);
   private genreHttp = inject(GenreHttpService);
   private notifications = inject(NotificationsService);
 
@@ -160,10 +165,27 @@ export class GlobalEffects {
         tap(({ network }) =>
           this.notifications.openSnackBar(
             network === 'offline'
-              ? "You're offline. Check your connection."
-              : 'Internet connected. Please refresh the page'
+              ? "You're offline. Please check your connection."
+              : 'Back Online. Reloading...',
+            "Internet Connectivity"
           )
         )
+      );
+    },
+    { dispatch: false }
+  );
+
+  reloadOnNetworkReconnection$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(GlobalActions.globalAction.setConnectivity),
+        concatLatestFrom(() => [this.store.select(selectUrl)]),
+        filter(([{ network }]) => network === 'online'),
+        tap(([, currentUrl]) => {
+          this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+          this.router.onSameUrlNavigation = 'reload';
+          this.router.navigate([currentUrl]);
+        })
       );
     },
     { dispatch: false }
