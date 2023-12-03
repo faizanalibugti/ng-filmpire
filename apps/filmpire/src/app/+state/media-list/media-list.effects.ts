@@ -126,7 +126,11 @@ export class MediaListEffects {
             this.store.select(selectPagination),
             this.store.select(selectAllMediaList),
           ]),
-          filter(([, , mediaList]) => mediaList.length > 0),
+          filter(([, pagination, mediaList]) =>
+            mediaList.length > 0 && pagination
+              ? pagination?.page + 1 <= pagination?.total_pages
+              : false
+          ),
           map(([, pagination]) =>
             MediaListActions.mediaListAction.changePage({
               page: pagination?.page ? pagination.page + 1 : 1,

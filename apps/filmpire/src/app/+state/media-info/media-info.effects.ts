@@ -202,6 +202,9 @@ export class MediaInfoEffects {
               MediaInfoActions.mediaInfoApiActions.addToFavoriteSuccess({
                 favorite,
               })
+            ),
+            catchError((e) =>
+              of(MediaInfoActions.mediaInfoApiActions.addToFavoriteFailure(e))
             )
           )
       )
@@ -231,6 +234,9 @@ export class MediaInfoEffects {
               MediaInfoActions.mediaInfoApiActions.addToWatchlistSuccess({
                 watchlist,
               })
+            ),
+            catchError((e) =>
+              of(MediaInfoActions.mediaInfoApiActions.addToWatchlistFailure(e))
             )
           )
       )
