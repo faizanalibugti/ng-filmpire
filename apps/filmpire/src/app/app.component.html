@@ -18,7 +18,12 @@
         ></ng-filmpire-sidebar>
       </mat-sidenav>
 
-      <mat-sidenav-content class="dark:bg-[#121212] dark:text-white">
+      <mat-sidenav-content
+        class="dark:bg-[#121212] dark:text-white"
+        [ngStyle]="{
+          'margin-left': snav.opened && !global.isMobile ? '250px' : '0px'
+        }"
+      >
         <ng-filmpire-navbar
           [darkMode]="global.darkMode"
           [user]="global.user"

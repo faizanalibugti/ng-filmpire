@@ -167,7 +167,7 @@
                           : 'assets/actor_avatar_placeholder.jpg'
                       "
                       alt="{{ actor.name }}"
-                      class="mx-auto h-[150px] w-full max-w-[100px] rounded-lg object-cover"
+                      class="mx-auto h-[150px] w-full max-w-[100px] rounded-lg object-cover hover:scale-105"
                       loading="lazy"
                     />
                     <p class="mt-1 text-center text-sm">{{ actor.name }}</p>
@@ -195,7 +195,7 @@
             </a>
 
             <a
-              *ngIf="media.mediaInfo.imdb_id"
+              *ngIf="media.mediaInfo.imdb_id && !media.isLoggedIn"
               class="bg-[#1976d2] dark:bg-[#dc1a28]"
               href="https://www.imdb.com/title/{{ media.mediaInfo.imdb_id }}"
               matTooltip="Visit imDB page"

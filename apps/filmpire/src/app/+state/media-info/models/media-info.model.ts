@@ -9,5 +9,6 @@ export interface MediaInfoPage {
   mediaInfo: MovieDetail | TvShowDetail;
   accountState: AccountStates;
   currentMedia: SelectedMedia;
+  isLoggedIn: boolean;
   loaded: boolean;
 }
