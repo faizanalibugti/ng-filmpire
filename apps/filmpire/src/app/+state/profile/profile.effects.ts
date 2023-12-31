@@ -47,16 +47,54 @@ export class ProfileEffects {
       filter(({ sessionId }) => !!sessionId),
       concatMap(({ user, sessionId }) =>
         forkJoin({
-          favoriteMovies: this.accountHttp.getFavoriteMovies(
-            user.id,
-            sessionId
+          favoriteMovies: this.accountHttp
+            .getFavoriteMovies(user.id, sessionId)
+            .pipe(
+              catchError((error) => {
+                // Handle error for getFavoriteMovies
+                return of({
+                  page: 0,
+                  total_pages: 0,
+                  total_results: 0,
+                  results: [],
+                });
+              })
+            ),
+          favoriteTV: this.accountHttp.getFavouriteTV(user.id, sessionId).pipe(
+            catchError((error) => {
+              // Handle error for getFavoriteMovies
+              return of({
+                page: 0,
+                total_pages: 0,
+                total_results: 0,
+                results: [],
+              });
+            })
           ),
-          favoriteTV: this.accountHttp.getFavouriteTV(user.id, sessionId),
-          watchListMovies: this.accountHttp.getWatchListMovies(
-            user.id,
-            sessionId
+          watchListMovies: this.accountHttp
+            .getWatchListMovies(user.id, sessionId)
+            .pipe(
+              catchError((error) => {
+                // Handle error for getFavoriteMovies
+                return of({
+                  page: 0,
+                  total_pages: 0,
+                  total_results: 0,
+                  results: [],
+                });
+              })
+            ),
+          watchListTV: this.accountHttp.getWatchListTV(user.id, sessionId).pipe(
+            catchError((error) => {
+              // Handle error for getFavoriteMovies
+              return of({
+                page: 0,
+                total_pages: 0,
+                total_results: 0,
+                results: [],
+              });
+            })
           ),
-          watchListTV: this.accountHttp.getWatchListTV(user.id, sessionId),
         }).pipe(
           map((profileData: ProfileData) =>
             ProfileActions.profileApiActions.loadProfileSuccess({
